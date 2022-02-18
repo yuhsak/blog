@@ -1,14 +1,14 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Notes for hacks`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `井上祐作`,
+      summary: `東京都在住のソフトウェアエンジニア。Web系とかデータ分析とか諸々`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `ソフトウェアエンジニアの技術メモ`,
+    siteUrl: `https://blog.ysk.im`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `YuhsakInoue`,
     },
   },
   plugins: [
@@ -46,6 +46,20 @@ module.exports = {
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          {
+            resolve: "gatsby-transformer-remark",
+            options: {
+              plugins: [
+                {
+                  resolve: "gatsby-remark-external-links",
+                  options: {
+                    target: "_blank",
+                    rel: "noopener noreferrer nofollow",
+                  },
+                },
+              ],
+            },
+          },
         ],
       },
     },
