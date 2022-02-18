@@ -1,231 +1,76 @@
 ---
-title: Hello World
-date: "2015-05-01T22:12:03.284Z"
-description: "Hello World"
+title: Hello, world!
+date: "2022-02-18T04:23:39.841Z"
+description: "とうとう技術ブログを開設。Gatsbyっていいね"
 ---
 
-This is my first post on my new fake blog! How exciting!
+もうかれこれ 10 年以上前から作りたいと思っていた技術ブログ的なものをようやく開設する運びとなった。
 
-I'm sure I'll write a lot more interesting things in the future.
+[Qiita](https://qiita.com)とか[Zenn](https://zenn.dev)とか技術記事系の素敵なサイトに投稿すればいいかなとも思ったけど、ああいうプラットフォームに投稿するのってちゃんと記事書かなきゃいけない気がしちゃってちょっとハードル高いよね。
 
-Oh, and here's a great quote from this Wikipedia on
-[salted duck eggs](https://en.wikipedia.org/wiki/Salted_duck_egg).
+やっぱり日々のメモ代わりに気軽に色々書ける場所がいい。
 
-> A salted duck egg is a Chinese preserved food product made by soaking duck
-> eggs in brine, or packing each egg in damp, salted charcoal. In Asian
-> supermarkets, these eggs are sometimes sold covered in a thick layer of salted
-> charcoal paste. The eggs may also be sold with the salted paste removed,
-> wrapped in plastic, and vacuum packed. From the salt curing process, the
-> salted duck eggs have a briny aroma, a gelatin-like egg white and a
-> firm-textured, round yolk that is bright orange-red in color.
+そんで今立ち上げるなら静的サイトジェネレータ系一択だなと思って[Hugo](https://gohugo.io)と[Gatsby](https://www.gatsbyjs.com)で迷った結果Gatsbyでやることにした。
 
-![Chinese Salty Egg](./salty_egg.jpg)
+何か流行ってるのは知っていたけど使ったのは初めて。すごい良いね。  
+一回ページ読み込んだ後はクライアントサイドで画面遷移するから動作がめちゃくちゃ速い。[DEV](https://dev.to)みたいだね。  
+ローカルのプレビューもサクサク動くしちゃんと保存する度に更新されるし。
 
-You can also write code blocks here!
+最初GitHubからNetlifyとかに連携してデプロイするつもりでいたら公式で[Gatsby Cloud](https://www.gatsbyjs.com/products/cloud)というマネージドホスティングを始めていたのを発見。  
+公式サイトからGitHubアカウントと連携→テンプレート選択とポチポチ進めるだけでサイトがデプロイされてしまった。  
+あとはローカルで編集したのをpushすればその度に自動でビルドが走ってデプロイまでされるみたい。超便利。
 
-```js
-const saltyDuckEgg = "chinese preserved food product"
-```
+[Pricing](https://www.gatsbyjs.com/pricing)を見ると今のところ `Free/$0` `Professional/$50` `Enterprise/$相談` の3パターンの料金体系がある。個人サイトならFreeでも十分そう。大事な項目だけ抜粋するとこんな感じ↓
 
-| Number | Title                                    | Year |
-| :----- | :--------------------------------------- | ---: |
-| 1      | Harry Potter and the Philosopher’s Stone | 2001 |
-| 2      | Harry Potter and the Chamber of Secrets  | 2002 |
-| 3      | Harry Potter and the Prisoner of Azkaban | 2004 |
+**Free プラン**
 
-[View raw (TEST.md)](https://raw.github.com/adamschwartz/github-markdown-kitchen-sink/master/README.md)
+| 項目                       |     制限 |
+| :------------------------- | -------: |
+| 管理ユーザ数               |      1人 |
+| 並列ビルド数               |    1並列 |
+| コア数                     |    1コア |
+| メモリ                     |      1GB |
+| ビルド回数/月              |    500回 |
+| ビルド分/月                | 制限無し |
+| デプロイ回数/日            | 制限無し |
+| カスタムドメイン数         |      1個 |
+| サイト数                   |      5個 |
+| 通信量/月                  |    100GB |
+| リクエスト数/月            |    100万 |
+| Serverless Functions       |     10万 |
+| プレビュー                 |        ○ |
+| プレビューのパスワード制限 |        × |
 
-This is a paragraph.
+一ヶ月で100万リクエスト/100GBまでのトラフィックを捌けるカスタムドメインサイトが1つ持てるという感じ。  
+ビルドに使えるメモリが1GBというのは実際どんなもんなんだろうね。速度だけに影響するのか、プラグインや記事の数が増えるとビルド自体が成功しなくなるのか。
 
-    This is a paragraph.
+個人ブログとしては全然十分そうなのでしばらく使ってみるつもり。  
+何より結局自前のローカルでもビルド出来るから自分で別に用意した環境に移行するのも当たり前に可能というのが素晴らしいね。ブログサービスみたいに完全ロックインされない。
 
-# Header 1
+料金表を見てたらServerless Functionsという項目があることに気が付いて調べてみるとまぁその名の通りサイトに動的なAPIを生やせる機能みたいだった。[NEXT.JS](https://nextjs.org)の[Vercel](https://vercel.com)にもあるやつ。
 
-## Header 2
+NEXTのAPI Routesもそうだけど、どんなに簡素でもいいからフレームワークなりプラットフォームなりが公式に推奨してるユースケースの範囲内で任意の処理を走らせられる機構があるのと無いのとでは取り回しの良さが段違いに変わってくるから嬉しいポイント。
 
-    Header 1
-    ========
+それにしてもVercel, Netlify, Firebase Hostingしかり最近のマネージドホスティング系のサービスはデフォルトでFastlyとかのめっちゃ速いCDNが前段に置かれててすごいね。
 
-    Header 2
-    --------
+↓こんなん当たり前のように備えててありがたすぎじゃない？ドキュメント見てるだけでワクワクしちゃう。
 
-# Header 1
+- ほぼノーコンフィグで設定できるGitHub連携のビルド&デプロイフロー
+- 爆速のCDN
+- 簡易なサーバサイド処理のフルマネージド実行環境
+- コンテナベースのプレビュー/ロールバック可能なデプロイ管理
+- 小規模の利用なら十分な内容の無料プラン
 
-## Header 2
+今はまだ実験的なものだけど最近動的な処理をCDNのエッジノードにのせられる系のサービスもあるよね。  
+多分今後はそんなんも当たり前のように備わるようになって、可能な限りアプリケーションサーバに到達するリクエストを減らしていく方向の構造が主流になっていきそう。
 
-### Header 3
+ちょっと前に出たNEXTと同じくReactベースのフレームワークの[Remix](https://remix.run)もそんな思想だよね。  
+NEXTがコンテンツの静的なキャッシュの生成/配信の管理を中央のアプリケーションサーバで行うことを前提にしているのに対してRemixは動的なコンテンツの生成自体を出来るだけエッジに寄せた上でキャッシュまわりはCDNに全面的に頼るという。
 
-#### Header 4
+実際本格的なWebサービスってほぼほぼリアルタイムでSSRが必要なケースがかなり多いよね、だからやっぱそれは前提にした上でパフォーマンスも開発効率もめっちゃ良くなるみたいなアーキテクチャがみんな欲しいんじゃない？というRemixの主張は確かにそうです感がすごいある。
 
-##### Header 5
+というか個人的にはNEXTで開発してるとSSRを前提にしてる部分としてない部分のコンテキストの違いがちょっと混乱しやすいなというか、そこらへんの機構についてしっかり理解した上でNEXTの動作仕様に習熟していないと多分わけわかんなくなっちゃうんだろうなと思うことが多々あって、Remixみたいに基本クラサバモデルでサーバが常に動的にレスポンスを返すのが前提だと開発者がとっつきやすくてむしろそれが主な理由で流行ることもありそうと思ってる。公式サイトもオシャレでかっこいいし。
 
-###### Header 6
+そういう感じでこれからもどんどん色々進化していってまた今後数年でガラッと環境変わるんだろうね。
 
-    # Header 1
-    ## Header 2
-    ### Header 3
-    #### Header 4
-    ##### Header 5
-    ###### Header 6
-
-# Header 1
-
-## Header 2
-
-### Header 3
-
-#### Header 4
-
-##### Header 5
-
-###### Header 6
-
-    # Header 1 #
-    ## Header 2 ##
-    ### Header 3 ###
-    #### Header 4 ####
-    ##### Header 5 #####
-    ###### Header 6 ######
-
-> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-
-    > Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-
-> ## This is a header.
->
-> 1. This is the first list item.
-> 2. This is the second list item.
->
-> Here's some example code:
->
->     Markdown.generate();
-
-    > ## This is a header.
-    > 1. This is the first list item.
-    > 2. This is the second list item.
-    >
-    > Here's some example code:
-    >
-    >     Markdown.generate();
-
-- Red
-- Green
-- Blue
-
-* Red
-* Green
-* Blue
-
-- Red
-- Green
-- Blue
-
-```markdown
-- Red
-- Green
-- Blue
-
-* Red
-* Green
-* Blue
-
-- Red
-- Green
-- Blue
-```
-
-- `code goes` here in this line
-- **bold** goes here
-
-```markdown
-- `code goes` here in this line
-- **bold** goes here
-```
-
-1. Buy flour and salt
-1. Mix together with water
-1. Bake
-
-```markdown
-1. Buy flour and salt
-1. Mix together with water
-1. Bake
-```
-
-1. `code goes` here in this line
-1. **bold** goes here
-
-```markdown
-1. `code goes` here in this line
-1. **bold** goes here
-```
-
-Paragraph:
-
-    Code
-
-<!-- -->
-
-    Paragraph:
-
-        Code
-
----
-
----
-
----
-
----
-
----
-
-    * * *
-
-    ***
-
-    *****
-
-    - - -
-
-    ---------------------------------------
-
-This is [an example](http://example.com "Example") link.
-
-[This link](http://example.com) has no title attr.
-
-This is [an example][id] reference-style link.
-
-[id]: http://example.com "Optional Title"
-
-    This is [an example](http://example.com "Example") link.
-
-    [This link](http://example.com) has no title attr.
-
-    This is [an example] [id] reference-style link.
-
-    [id]: http://example.com "Optional Title"
-
-_single asterisks_
-
-_single underscores_
-
-**double asterisks**
-
-**double underscores**
-
-    *single asterisks*
-
-    _single underscores_
-
-    **double asterisks**
-
-    __double underscores__
-
-This paragraph has some `code` in it.
-
-    This paragraph has some `code` in it.
-
-![Alt Text](https://placehold.it/200x50 "Image Title")
-
-    ![Alt Text](https://placehold.it/200x50 "Image Title")
+Webは本当に楽しいな。
