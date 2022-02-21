@@ -95,7 +95,7 @@ hr {
   border: 0;
 }
 
-code {
+:not(pre[class*="language-"]) > code.language-text {
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 0.8em;
