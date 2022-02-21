@@ -30,7 +30,7 @@ const Seo = ({ description, lang, meta, title }) => {
   const metaDescription = description || site.siteMetadata.description
   const siteTitle = site.siteMetadata?.title
 
-  const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle
+  const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`
 
   return (
     <Helmet
@@ -38,7 +38,7 @@ const Seo = ({ description, lang, meta, title }) => {
         lang,
       }}
       title={title}
-      titleTemplate={title ? `%s | ${siteTitle}` : siteTitle}
+      titleTemplate={title === siteTitle ? siteTitle : `%s | ${siteTitle}`}
       meta={[
         {
           name: `description`,
