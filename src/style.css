@@ -327,6 +327,22 @@ a:focus {
   font-family: var(--font-heading);
 }
 
+.blog-post .gatsby-resp-image-wrapper {
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.blog-post .gatsby-resp-image-wrapper:hover {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.blog-post .gatsby-resp-image-wrapper > * {
+  border-radius: 4px;
+}
+
 .blog-post-nav {
   margin-top: var(--spacing-6);
 }
