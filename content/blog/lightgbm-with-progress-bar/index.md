@@ -16,6 +16,12 @@ tags: ["機械学習", "Python", "LightGBM", "tqdm", "小ネタ"]
 
 ## スニペット
 
+`tqdm` を初めて使う時はpipやcondaでインストールしておこう。
+
+```bash
+pip install tqdm
+```
+
 LightGBMの `train` には関数を指定することでイテレーション毎に任意の処理を実行出来る `callbacks` オプションがある。
 
 そこにtqdmで作ったプログレスバーを更新する処理を挟んで実現する仕組み。
