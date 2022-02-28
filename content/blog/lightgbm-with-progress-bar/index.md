@@ -3,12 +3,12 @@ title: LightGBMの進捗をプログレスバーで表示する
 date: "2022-02-28T02:11:02.750Z"
 description: "見やすいしテンション上がるやつ"
 category: "データサイエンス"
-tags: ["機械学習", "LightGBM", "tqdm", "小ネタ"]
+tags: ["機械学習", "Python", "LightGBM", "tqdm", "小ネタ"]
 ---
 
 学習の進捗がずらずらっと標準出力に出てきちゃうの邪魔だよね。特にNotebook環境の時はすごい見にくくなるし。
 
-今日は [`tqdm`](https://github.com/tqdm/tqdm) を使っていい感じにプログレスバーで進捗を表示するスニペットを紹介するよ。
+今日はPythonライブラリの [`tqdm`](https://github.com/tqdm/tqdm) を使っていい感じのプログレスバーで進捗を表示するスニペットを紹介するよ。
 
 ![](lgbm-tqdm.gif)
 
@@ -16,7 +16,7 @@ tags: ["機械学習", "LightGBM", "tqdm", "小ネタ"]
 
 ## スニペット
 
-LightGBMの `train` には `callbacks` に関数を指定することでイテレーション毎に任意の処理を実行出来るオプションがある。
+LightGBMの `train` には関数を指定することでイテレーション毎に任意の処理を実行出来る `callbacks` オプションがある。
 
 そこにtqdmで作ったプログレスバーを更新する処理を挟んで実現する仕組み。
 
@@ -61,8 +61,9 @@ class LgbmProgressBarCallback:
         self.pbar.refresh()
 ```
 
-使う時はこう。進捗以外のお知らせは普通に出力されちゃうから出来るだけ減らしたい場合は併せて `"verbosity": -1` を指定しておくといいかも。
+使う時はこう。
 
+進捗以外のお知らせは普通に出力されちゃうから出来るだけ減らしたい場合は併せて `"verbosity": -1` を指定しておくといいかも。  
 `Info` 系の出力が無くなって `Warn` `Error` 系だけになるよ。
 
 ```python
