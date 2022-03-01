@@ -439,7 +439,13 @@ Successive Halvingでは基本的に $\text{min\_resource} \times \text{reductio
 
 `reduction_factor` の値が大きいほどじっくりステップを重ねてから判定するようなっていくんだけど、その分判定条件は厳しくなるという感じ。
 
-これをベースに`min_early_stopping_rate`で判定が行われるステップ数を調整できる。指定するとステップ数の計算が$\text{min\_resource} \times \text{reduction\_factor}^{\text{rung}+\text{min\_early\_stopping\_rate}}$で行われるようになる。
+これをベースに`min_early_stopping_rate`で判定が行われるステップ数を調整できる。指定するとステップ数の計算が下記のように行われるようになる。
+
+$$
+\footnotesize
+s = \text{min\_early\_stopping\_rate} \newline \ \newline
+\text{step} = \text{min\_resource} \times \text{reduction\_factor}^{\text{rung}+s}
+$$
 
 数字を大きくすると判定が行われるステップを後回しにできるから判定条件はそのままに少し長く様子を見る方向に調整するために使える。  
 特に`reduction_factor`が大きい時に最初の`min_resource`ステップ目でかなり厳しい判定が行われてしまうのを調整するためにある項目な気がする。
@@ -471,8 +477,9 @@ Successive Halvingでは基本的に $\text{min\_resource} \times \text{reductio
 内部で作成されるPrunerの数は以下の式で決まるらしい。
 
 $$
+\footnotesize
 r = \text{reduction\_factor} \newline \ \newline
-N_{\text{pruners}} = \text{floor}\bigg(\log_{r}\Big(\frac{\text{max\_resource}}{\text{min\_resource}}\Big)\bigg) + 1
+N = \text{floor}\bigg(\log_{r}\Big(\frac{\text{max\_resource}}{\text{min\_resource}}\Big)\bigg) + 1
 $$
 
 `min_resource = 100` `max_resource = 1000` `reduction_factor = 3` の時は$\text{floor}(\log_3 \frac{1000}{100}) + 1 = 3$ということで3つのPrunerが作られるってことかな。`reduction_factor` を2に減らすと4つ作成されることになるね。
