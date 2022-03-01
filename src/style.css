@@ -97,10 +97,11 @@ hr {
 
 :not(pre[class*="language-"]) > code.language-text {
   padding: 0.2em 0.4em;
-  margin: 0;
   font-size: 0.8em;
+  /* margin: 0; */
   background-color: rgba(110, 118, 129, 0.2);
-  border-radius: 6px;
+  color: var(--color-text);
+  /* border-radius: 6px; */
 }
 
 /* Heading */

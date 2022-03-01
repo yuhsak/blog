@@ -54,6 +54,12 @@ module.exports = {
               rel: "noopener noreferrer nofollow",
             },
           },
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+              strict: `ignore`,
+            },
+          },
         ],
       },
     },
