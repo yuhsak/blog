@@ -541,9 +541,9 @@ $$
 
 ということで3つの子Prunerが作られるってことかな。`reduction_factor` を2に減らすと4つ作成されることになるね。
 
-多分子Pruneが1個だけの時は単一のSuccessiveHalvingPrunerと同じになっちゃってあんまり意味がないと思うから適宜調整しよう。
+多分子Prunerが1個だけの時は単一のSuccessiveHalvingPrunerと同じになっちゃってあんまり意味がないと思うから適宜調整しよう。
 
-各子Prunerに指定される`min_early_stopping_rate`は単純にそのPrunerのインデックスになるよう。Pruner1は0.0, Pruner2は1.0, Pruner3は2.0, ...。
+各子Prunerに与えられる`min_early_stopping_rate`は単純にそのPrunerのインデックスになるよう。Pruner1は0.0, Pruner2は1.0, Pruner3は2.0, ...。
 
 #### 試しに計算してみる
 
