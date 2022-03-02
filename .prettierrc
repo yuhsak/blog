@@ -1,14 +1,22 @@
 {
-  "arrowParens": "avoid",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "jsxSingleQuote": true,
+  "printWidth": 100,
+  "quoteProps": "as-needed",
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false,
   "semi": false,
   "overrides": [
     {
-      "files":["*.md", "README"],
-      "options": {"parser": "markdown-nocjsp"}
+      "files": ["*.md", "README"],
+      "options": { "parser": "markdown-nocjsp" }
     },
     {
-      "files":["*.mdx"],
-      "options": {"parser": "mdx-nocjsp"}
+      "files": ["*.mdx"],
+      "options": { "parser": "mdx-nocjsp" }
     }
   ]
 }

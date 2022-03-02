@@ -1,9 +1,9 @@
 ---
 title: Optunaでハイパーパラメータチューニング
-date: "2022-03-01T19:03:32.317Z"
-description: "GridSearchは卒業？Prunerも使いこなして効率良く自動化しよう"
-category: "データサイエンス"
-tags: ["機械学習", "Python", "Optuna", "ハイパーパラメータチューニング"]
+date: '2022-03-01T19:03:32.317Z'
+description: 'GridSearchは卒業？Prunerも使いこなして効率良く自動化しよう'
+category: 'データサイエンス'
+tags: ['機械学習', 'Python', 'Optuna', 'ハイパーパラメータチューニング']
 ---
 
 意外と難易度が高いモデルのハイパーパラメータチューニング。
@@ -166,7 +166,7 @@ study.best_params
 - float型
 - 対数空間からサンプリング
   - 小さい値の範囲ほど密に探索されて大きいところはその逆になる
-  - 1と2では大きな違いだけど100と200ではそれほど変わらなそうみたいなパラメータに使う
+  - 例えば1\~10の範囲では1,2,3,4,5,6,7,8,9って細かく試してみて欲しいけど100\~200では100, 140, 180とかざっくり試すだけで良いみたいなパラメータに使う
 
 ### [`suggest_discrete_uniform(name, low, high, step)`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_discrete_uniform)
 
@@ -204,7 +204,7 @@ Optunaではあるパラメータ(たち)の一連の最適化を1まとめに�
 
 ローカルで使うだけなら`SQLite`を指定すれば何も準備しなくてOKだし、リモートサーバ上の`MySQL`や`PostgreSQL`なんかに接続すれば複数のマシンで進捗を共有しながら並列に最適化を走らせることも出来る。
 
-SQLiteインターフェースはPythonにデフォルトで備わっててすぐに使えるし、途中で終了した最適化を後から再開できると結構便利だからローカルだけで使う場合も最低限SQLiteを使った永続化はしておくようにしよう。
+SQLiteインターフェースはPythonにデフォルトで備わっててすぐに使えるし、過去の探索を後から見返したり再開したりできると結構便利だからローカルだけで使う場合も最低限SQLiteを使った永続化はしておくようにしよう。
 
 後述するダッシュボードを使った状況の可視化もできるようになるしね。
 
@@ -231,7 +231,7 @@ study.optimize(objective, n_trials=100)
 
 ちなみに**コラボ環境で複数のNotebookからマウントしたGoogle Drive上のSQLiteファイルを指定すればDBサーバ要らずの並列最適化が出来る**気がしてしまうけど、これやると上手くいかないどころか**SQLiteファイル自体ぶっ壊れる**ことがあるからマジで注意してね。
 
-これはコラボとかGoogle Driveが問題なんじゃなくてSQLiteが実現してるファイル単位での整合性担保がOSのファイルシステムのロック機構に依拠した仕組みになってることが理由みたい。
+これはコラボとかGoogle Driveが問題なんじゃなくてSQLiteが実現してるファイル単位の整合性担保がOSのファイルシステムのロック機構に依存した仕組みになってることが理由みたい。
 
 SQLiteの公式サイトにも「ネットワーク経由で動作するファイルシステムはロック周りの挙動が絶対何かしらバグってるからSQLiteうまく動かないよ」って[書いてあった。](https://www.sqlite.org/faq.html)
 
@@ -247,17 +247,17 @@ SQLiteの公式サイトにも「ネットワーク経由で動作するファ�
 
 初期に損失が減少するペースが遅すぎて収束まで待っても確実に微妙な精度にしかならなそうな時とか。
 
-Optunaにも探索をより効率化するためにダメそうな試行を早期に打ち切って次に進むPrune(枝刈り)という仕組みがあって、`Pruner`を使って実現することが出来る。
+Optunaにも探索をより効率化するためにダメそうな試行を早期に打ち切って次に進むPrune(枝刈り)という機能があって、`Pruner`という仕組みを使って簡単に実現することが出来る。
 
-あるepochやiterationの時点で過去の試行の中央値に届いていなければ打ち切る`MedianPruner`を代表として色々なルールのPrunerが用意されてるよ。
+あるエポックやイテレーションの時点で過去の試行の中央値に届いていなければ打ち切る`MedianPruner`を代表として色々なルールのPrunerが用意されてるよ。
 
-個人的にはこのPrunerの使いやすさもOptunaの一押し便利ポイント。ダメそうな組み合わせをどんどん飛ばして良さげなものに注力できるって素晴らしいよね。
+個人的にはこのPrunerの使いやすさもOptunaの一押し便利ポイント！ダメそうな組み合わせをどんどん飛ばして良さげなものに注力できるって素晴らしいよね。
 
-と言っても打ち切りをするってことは当然最初はダメでもその後挽回して良いスコアに達していたはずの試行まで捨ててしまうことになる。
+と言っても途中で打ち切りをするってことは当然最初はダメでもその後挽回して良いスコアに達していたはずの試行まで捨ててしまうことになる。
 
-早期に打ち切れば打ち切るほどそのリスクは増えるし、逆に打ち切り判定を遅らせれば遅らせるほど今度は無駄な時間を使っちゃうリスクが増える。
+早期に打ち切れば打ち切るほどそのリスクは増えるし、逆に打ち切り判定を遅らせれば遅らせるほど今度は無駄な時間を使ってしまうリスクが増える。
 
-扱ってるモデルは後から挽回する可能性がほぼ無いような学習曲線のものなのか、それがワンチャン全然ありあえるモデルなのか。
+そもそも扱ってるモデルは後から挽回する可能性がほぼ無いような学習曲線のものなのか、それがワンチャン全然ありあえるモデルなのか。
 
 リスクをどう考慮するかはそういったモデルの学習の性質にもよるんだけど、Optunaにはこの部分のバランスを最適化することに着目したPrunerなんかもあるから紹介したいと思う。
 
@@ -275,9 +275,9 @@ study = optuna.create_study(
 
 Studyを作る時はこれだけでOKなんだけど、学習の進捗に応じて打ち切りを決定するっていうPrunerの性質上どうしても学習の進捗をOptunaに知らせる必要があるのね。
 
-だからモデル学習時のコールバックにもPruneを制御する簡単なコードを挟む必要があるよ。
+だからモデル学習時のコールバックにもPruningを制御する簡単なコードを挟む必要があるよ。
 
-LightGBMの例だとこんな感じ。
+LightGBMの例だとこんな感じ。[^1]
 
 LightGBMのコールバックの書き方については[LightGBMの進捗をプログレスバーで表示する](./lightgbm-with-progress-bar)にもまとめてあるから興味があれば是非見てみてね。
 
@@ -300,7 +300,7 @@ class LgbmPruningCallback:
         if (env.iteration + 1) % self.interval > 0:
             return
 
-        # validation用のデータが無い場合はスキップ
+        # validation結果が無い場合はスキップ、あれば先頭のものを使う
         if len(env.evaluation_result_list) == 0:
             return
         entry = env.evaluation_result_list[0]
@@ -313,7 +313,9 @@ class LgbmPruningCallback:
             raise optuna.TrialPruned(f"Trial was pruned at iteration {env.iteration}")
 ```
 
-大事なのは`trial.report(value, step)`を実行してiteration数とその時のスコアをOptunaに報告するってところと、`trial.should_prune()`で打ち切りの判定を取得するところ。
+大事なのは`trial.report(value, step)`を実行してiterationとその時のスコアをOptunaに報告するってところと、`trial.should_prune()`で打ち切りの判定を取得するところ。
+
+引数名からも分かるようにOptunaではエポックやイテレーションなど学習の反復の単位を総称してステップと呼ぶようになってるから覚えておこう。
 
 学習のcallbacksに指定する時は`objective`の引数のtrialをこのコールバックにも渡してあげるようにする。
 
@@ -351,9 +353,11 @@ study.optimize(objective, n_trials=100)
 
 こんなふうにどんなモデルでもコールバックに同様の処理を仕込むことが出来ればPrunerと組み合わせることが出来る。
 
-逆にコールバックが指定できないライブラリは悲しいことに諦めるしかないんだけど、最近のライブラリは割と何でもコールバック差し込めるから活用できるケースは多そうだよね。
+逆にコールバックが指定できないライブラリは悲しいことに諦めるしかないんだけど、最近のライブラリは割と何でもコールバックを差し込めるから活用できるケースは多そうだよね。
 
-※ 実はOptunaのLightGBM用integrationではずばり[`LightGBMPruningCallback`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.integration.LightGBMPruningCallback.html)っていうやつを用意してくれてるんだけど、iterationの度にpruneの判定をするようになっててオーバーヘッドがバカにならない(すごい遅くなる)っていうのと全てのvalid_setsの全てのmetricの値が打ち切り判定対象になってるって部分で使い勝手があまり良く無いから自分で用意した方がベターだと思う。コード量も少ないしね。
+[^1]:
+    仕組みの解説のためにコールバックの実装例を載せたけど、実はOptunaのLightGBM用integrationではほとんど同じ動作をする[`LightGBMPruningCallback`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.integration.LightGBMPruningCallback.html)っていうやつを用意してくれてるからそっちを使ってもOK。  
+    個人的にはこういう外部ライブラリ連携系のインターフェースってどうしてもメンテが後回しになりがちで最新版に追従できてないがちな印象があるから気に入ったやつは自分で書いちゃうスタイルが好み。
 
 Prunerの基本的な使い方が分かったところでざっくりPrunerの一覧を紹介するよ。
 
@@ -391,7 +395,7 @@ MedianPrunerのパーセンタイルを指定できるバージョン。
 
 スコアに上限と下限を設けてはみ出た場合に打ち切りを行うPruner。
 
-特定のパラメータの組み合わせの時だけ損失がめっちゃ大きくなって学習が収束しないようなケースを弾く、といった感じで使う想定みたい。
+特定のパラメータの組み合わせの時だけ損失が発散し続けて学習が収束しない、といったようなケースを弾くために使う想定みたい。
 
 **指定可能なオプション**
 
@@ -411,7 +415,9 @@ MedianPrunerのパーセンタイルを指定できるバージョン。
 
 ### [SuccessiveHalvingPruner](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.pruners.SuccessiveHalvingPruner.html)
 
-[Successive Halving](https://arxiv.org/abs/1502.07943)というバンディット問題を効率的に解くアルゴリズムを応用したPrunerみたい。
+Successive Halvingという、ハイパーパラメータの最適化を多腕バンディット問題の一種と捉えて効率的に計画するアルゴリズムを応用したPrunerみたい。
+
+[Non-stochastic Best Arm Identification and Hyperparameter Optimization](https://arxiv.org/abs/1502.07943)
 
 これはちょっと難しくて自分も正しく理解できてるか不安なんだけど、早期に打ち切りを行うリスクと無駄に時間をかけてしまうリスクのバランスを最適化して効率の良い判断をすることに注目したPrunerのよう。
 
@@ -419,47 +425,74 @@ MedianPrunerのパーセンタイルを指定できるバージョン。
 
 必須の引数は`min_resource`だけでその他はOptional。各パラメータのデフォルト値は`reduction_factor = 4` `min_early_stopping_rate = 0` `bootstrap_count = 0`になってるよ。
 
+#### min_resource & reduction_factor
+
 まずメインになるパラメータが`min_resource`と`reduction_factor`の2つ。
 
-`min_resource`には個々のTrialに割り当て可能な最低リソースを指定する。これ自体は抽象的な数値だから回数でも時間でも多分何でも良いんだけど、Optunaでは各学習で確保したい最低イテレーション数とかエポック数を指定する想定みたい。これを仮に100としよう。
+`min_resource`には個々のTrialに割り当て可能な最低リソースを指定する。これ自体は抽象的な数値だから回数でも時間でも多分何でも良いんだけど、基本Optunaでは各学習で確保したい最低イテレーション数とかエポック数を指定する想定みたい。[^2] これを仮に100としよう。
 
-続いてTrial中でこれまでにこのPrunerによって打ち切り判定が行われた回数を$\text{rung}$とする。この数字は0から始まって判定が行われる度に1、2、3と増えていく。
+[^2]: もし単位を時間にしたい時は`trial.report()`で報告するステップ数を経過秒数とかにすればいけそう
 
-Successive Halvingでは基本的に $\text{min\_resource} \times \text{reduction\_factor}^{\text{rung}}$ ステップ毎に打ち切り判定が行われる形になる。
+続いて、Successive Halvingってステージ0, ステージ1, ステージ2とステップ数に区切りを設けて段階的に打ち切り判定を行うようになっているのね。そんでこの時のステージ番号を$\text{rung}$とする。この数字は0から始まって判定が行われる度に1、2、3と増えていく。
+
+そうするとまず打ち切り判定は基本的に $\text{min\_resource} \times \text{reduction\_factor}^{\text{rung}}$ ステップ毎に行われる形になる。
 
 仮に `min_resource = 100` `reduction_factor = 4` とした時、一回目の判定は $100 \times 4^0 = 100$ ステップ時に行われる。
 
-二回目の判定は $100 \times 4^1 = 400$ ステップ、同様に三回目は $100 \times 4^2 = 1600$ ステップ。
+二回目の判定は $100 \times 4^1 = 400$ ステップ時、同様に三回目は $100 \times 4^2 = 1600$ ステップ時。
 
-その時の打ち切り条件はそのステップでのトップ $\frac{1}{\text{reduction\_factor}}$ 以内のスコアに入るかどうか。
+そしてその時の打ち切り条件は過去のTrialのそのステップにおけるスコアのトップ $\large \frac{1}{\text{reduction\_factor}}$ 以内に入るかどうか、となる。
 
-この場合は100, 400, 1600, 6400ステップ時にトップ$\frac 1 4$に入るかどうかで判定が行われる形になるね。
+この場合は100, 400, 1600, 6400ステップ時にトップ$\large \frac 1 4$に入るかどうかで判定が行われる形になるね。
 
-同様に`reduction_factor`が`2`の時を考えてみると100, 200, 400, 800ステップ時にトップ$\frac 1 2$の条件で判定が行われることになる。
+同様に`reduction_factor`が`2`の時を考えてみると100, 200, 400, 800ステップ時にトップ$\large \frac 1 2$の条件で判定が行われることになる。
 
 `reduction_factor` の値が大きいほどじっくりステップを重ねてから判定するようなっていくんだけど、その分判定条件は厳しくなるという感じ。
 
-これをベースに`min_early_stopping_rate`で判定が行われるステップ数を調整できる。指定するとステップ数の計算が下記のように行われるようになる。
+#### min_early_stopping_rate
+
+上記の内容をベースに`min_early_stopping_rate`で判定が行われるタイミングを調整できる。指定すると判定ステップ数の計算が下記のように行われるようになる。
 
 $$
-\footnotesize
+\small
 s = \text{min\_early\_stopping\_rate} \newline \ \newline
 \text{step} = \text{min\_resource} \times \text{reduction\_factor}^{\text{rung}+s}
 $$
 
-数字を大きくすると判定が行われるステップを後回しにできるから判定条件はそのままに少し長く様子を見る方向に調整するために使える。  
+数字を大きくすると判定が行われるステップを後回しにできるから判定条件はそのままに少し長く様子を見る方向に調整するために使える、っていうことかな？
+
 特に`reduction_factor`が大きい時に最初の`min_resource`ステップ目でかなり厳しい判定が行われてしまうのを調整するためにある項目な気がする。
+
+#### bootstrap_count
 
 最後の`bootstrap_count`は各$\text{rung}$においてそのステップに到達したTrialの数が指定した値を上回るまでTrialが次の$\text{rung}$へ進むことを抑制するというもの。
 
 例えば100, 400, 1600ステップ時に判定が行われるって場合にこれを`5`にしてると100ステップまで到達したTrialの数が5個未満のうちは全てのTrialが100ステップ目で打ち切られる。  
 5Trialになった時点で初めて次の400ステップの判定まで進む可能性のあるTrialが出てきて、、以下繰り返し。
 
+生き残るTrialの条件が「少なくともbootstrap_count個のTrialの中のTop$\large \frac{1}{\text{reduction\_factor}}$」になるって感じかな。初期に最後まで生き残ったTrialに対しても最低限の質を担保したい時に使う？
+
 以上が現時点での自分の理解。 特に`reduction_factor`が大事で、小さい値だと緩めの基準で早期にどんどん打ち切るようになるし大きい値だと長く様子を見るかわりに厳選したものだけ残すようになるってことだと思ってる。
+
+- 早期から打ち切る場合
+  - → 後から挽回してくる奴らも捨てちゃうリスクを減らすために打ち切り条件をゆるく
+- 長い目線で見る場合
+  - → 無駄なリソースを浪費するリスクを減らすために打ち切り条件を厳しく
+
+調整の方針としてはこういう感じになってくるのかな。
+
+- 毎回の試行をなるべく短時間で済ませつつ適度に良い感じの結果を得られればOK
+  - → `reduction_factor`を小さく
+- 毎回の試行に割と時間かけても良いから厳選した結果を得たい
+  - → `reduction_factor`を大きく
+
+モデルの性質を考慮に入れるのはもちろん、最適化全体にどれだけ時間をかけられるかっていうところも考えて調整してねってことだよね多分。
+
+かけられる時間があんまり無いなら雑でも良いから試行回数を増やした方が良いはずだし、じっくり時間とれるならそもそも試行回数は心配せずに吟味する方向にした方が良さそうだし。
 
 でもあんまり自信無い。間違ってたらマジでごめんね！
 
-正直これで効率のバランスが良くなる理論的な背景は全然わからないけど一見するとバランスがとれててリーズナブルに思えるね。
+どうしてこうすると探索の効率が良くなるのかっていう理論的な背景は正直自分には全然分かってないんだけど、一見するとバランスがとれててリーズナブルに思えるね。
 
 ちなみに正確にはOptunaでは元のSuccessive Halvingじゃなくて[Asynchronous Successive Halving](http://arxiv.org/abs/1810.05934)が採用されてるみたいで、実装の都合により細部が論文とは若干異なるとのこと。
 
@@ -467,38 +500,127 @@ $$
 
 個人的なPrunerの大本命がこれ！
 
-`reduction_factor`の値を変えた複数のSuccessiveHalvingPrunerを使って早期に打ち切っていくパターンと長く様子を見つつ厳選するパターンを組み合わせた動作を実現してくれるやつ。最強そう…！
+[Hyperband: A Novel Bandit-Based Approach to Hyperparameter Optimization](https://www.jmlr.org/papers/volume18/16-558/16-558.pdf)
 
-中身は実際に複数のSuccessiveHalvingPrunerを作って取り回すようになっているみたいで、パラメータは`min_early_stopping_rate`以外のSuccessive Halvingのパラメータ+`max_resource`となっている。こちらの`reduction_factor`のデフォルト値は`3`。
+`min_early_stopping_rate`の値を変えた複数のSuccessiveHalvingPrunerを使って早期から打ち切っていくパターンと長く猶予を与えるパターンを組み合わせた動作を実現してくれるやつ。最強そう…！
 
-`min_resource`に確保したい最低限のステップ数、`max_resource`に1Trialに許容できる最大ステップ数を指定することで内部でどういうSuccessive Halvingを何個組み合わせるか自動で決めてくれるみたい。  
-`max_resource`を明示的に指定しない場合は実際に観測したステップ数の最大値から推測してくれるようになってる。
+実装の中身は実際に複数のSuccessiveHalvingPrunerを作って取り回すようになっているみたいで、パラメータは`min_resource` `max_resource` `reduction_factor` `bootstrap_count`の4つとなっている。こちらの`reduction_factor`のデフォルト値は`3`。
 
-内部で作成されるPrunerの数は以下の式で決まるらしい。
+`min_resource`に確保したい最低限のステップ数、`max_resource`に個別のTrialに許容できる最大ステップ数を指定することで内部でSuccessiveHalvingPrunerを何個組み合わせるか決めてくれるみたい。
+
+注意点はこの`max_resource`はあくまでも大体こんなもんですよという数字をPrunerに教えるための参考値だから、例えステップ数がこの数字を超えたとしてもPrunerがそれを基準に打ち切りをしたりはしないっていうこと。普段通りモデルの学習パラメータでハンドリングしよう。
+
+`max_resource`を指定しない場合は実際に観測したステップ数の最大値から推測してくれるようになってる。けど特に`EarlyStopping`を使ってたりしてTrialごとに到達するステップ数にばらつきがある場合は明示的に指定するべしとのこと。
+
+そんで学習時には作成した子Prunerのどれか1つが個々のTrialに割り当てられる仕組み。
+
+学習の開始時に早期から切っていくパターンか長い目線パターンかが決まるっていうことだね。
+
+#### 作成されるPrunerの構成
+
+内部で作成される子Prunerの数は以下の式で決まるらしい。
 
 $$
-\footnotesize
+\small
 r = \text{reduction\_factor} \newline \ \newline
 N = \text{floor}\bigg(\log_{r}\Big(\frac{\text{max\_resource}}{\text{min\_resource}}\Big)\bigg) + 1
 $$
 
-`min_resource = 100` `max_resource = 1000` `reduction_factor = 3` の時は$\text{floor}(\log_3 \frac{1000}{100}) + 1 = 3$ということで3つのPrunerが作られるってことかな。`reduction_factor` を2に減らすと4つ作成されることになるね。
+例えば `min_resource = 100` `max_resource = 1000` `reduction_factor = 3` の時は…
 
-多分Pruner1個だとSuccessive Halvingと同じになっちゃってあんまり意味がないと思うから適宜調整しよう。
+$$
+\small
+\begin{aligned}
+N &= \text{floor}(\log_3 \frac{1000}{100}) + 1 \\
+N &= \text{floor}(\doteqdot 2.096) + 1 \\
+N &=  3
+\end{aligned}
+$$
 
-ただしこのPrunerとデフォルトのTPESampler(Samplerについては後述)を組み合わせる時はPrunerの数を増やせば増やすほど最低限必要なTrial数も増えるってことに注意する必要があるらしい。
+ということで3つの子Prunerが作られるってことかな。`reduction_factor` を2に減らすと4つ作成されることになるね。
 
-具体的には個々のTrialを複数あるSuccessiveHalvingPrunerのどれか1つに割り振る動作になる都合上、それぞれのPrunerに一定数のTrial結果がたまるまでTPESamplerが機能しなくなるってことみたい。
+多分子Pruneが1個だけの時は単一のSuccessiveHalvingPrunerと同じになっちゃってあんまり意味がないと思うから適宜調整しよう。
 
-TPESamplerは動作し始めるまでにデフォルトでは10Trial分の結果を貯める必要があるから最低でもこのPrunerで作成されるSuccessiveHalvingPrunerの数 × 10Trial分は試行する必要がある、っていうかそこを超えてからがTPESampler × HyperBandPrunerの本領発揮ってことになるのかな。
+各子Prunerに指定される`min_early_stopping_rate`は単純にそのPrunerのインデックスになるよう。Pruner1は0.0, Pruner2は1.0, Pruner3は2.0, ...。
 
-Prunerを3つ作成する場合は少なくとも`n_trials`を30以上に指定しないとあんまり意味ないよって感じだね。
+#### 試しに計算してみる
 
-単体のSuccessive Halvingだとパラメータ迷っちゃうからよしなに複数組み合わせてくれるのはめちゃめちゃ便利！
+具体的に `min_resource = 100` `max_resource = 1000` `reduction_factor = 3` の時の子Prunerの構成を考えてみよう。
+
+作成される子Prunerの数は3つだね。`min_early_stopping_rate`はそれぞれ`0.0` `1.0` `2.0`。
+
+この構成の時の各子Prunerの判定ステップと条件はこんな感じ。
+
+| 番号 | 1回目 | 2回目 | 3回目 |  4回目 | トップN |
+| :--- | ----: | ----: | ----: | -----: | ------: |
+| 1    |   100 |   300 |   900 |  2,700 |     1/3 |
+| 2    |   300 |   900 | 2,700 |  8,100 |     1/3 |
+| 3    |   900 | 2,700 | 8,100 | 24,300 |     1/3 |
+
+番号が若いほど早期からアクティブに打ち切りするようになってて、後ろに行くほど長い目で見るようになっていくのね。良さそう！
+
+`reduction_factor`を`4`に増やすとどうなるだろう。子Prunerの数は$\small \text{floor}(\log_4 \frac{1000}{100} \doteqdot 1.661) + 1$だから2つだね。
+
+判定ステップはこう。
+
+| 番号 | 1回目 | 2回目 | 3回目 |  4回目 | トップN |
+| :--- | ----: | ----: | ----: | -----: | ------: |
+| 1    |   100 |   400 | 1,600 |  6,400 |     1/4 |
+| 2    |   400 | 1,600 | 6,400 | 25,600 |     1/4 |
+
+反対に`reduction_factor`を`2`に減らした時は？子Prunerの数は$\small \text{floor}(\log_4 \frac{1000}{100} \doteqdot 3.322) + 1$だから4つ。
+
+| 番号 | 1回目 | 2回目 | 3回目 | 4回目 | トップN |
+| :--- | ----: | ----: | ----: | ----: | ------: |
+| 1    |   100 |   200 |   400 |   800 |     1/2 |
+| 2    |   200 |   400 |   800 | 1,600 |     1/2 |
+| 3    |   400 |   800 | 1,600 | 3,200 |     1/2 |
+| 4    |   800 | 1,600 | 3,200 | 6,400 |     1/2 |
+
+表にしてみると分かりやすいね。この結果から言えることはこんな感じかな？
+
+- `max_resource`に対する`min_resource`の割合によって作られるPruner数のベースが決まる
+  - 割合が小さいほどたくさん作られる
+- `reduction_factor`の数字が…
+  - 小さいほど早期から緩い条件で打ち切っていくタイプのPrunerをたくさん作る傾向
+  - 大きいほど長い目線で厳選するタイプのPrunerを少数作る傾向
+
+方針としてはSuccessiveHalvingの方向性を踏襲しつつ、その中にさらにバリエーションを持たせるという二段構えにすることで単一のSuccessiveHalvingの時に選択する必要があったトレードオフを出来る限り緩和しようとしている、ということだと理解してる。例によってあんまり自信が無いんだけどね。
+
+SuccessiveHalving単体よりも賢そうな感じがすごいね…！
+
+#### デメリット
+
+デメリットというかただの注意点かもしれないけど、このHyperBandPrunerとデフォルトのTPESampler(Samplerについては後述)を組み合わせる時は子Prunerの数を増やせば増やすほど最低限必要なTrial数も増えるってことに注意する必要があるらしい。
+
+具体的には個々のTrialを複数あるSuccessiveHalvingPrunerのどれか1つに割り振る動作になる都合上それぞれのPrunerに一定数のTrial結果がたまるまでTPESamplerが機能しなくなるってことみたい。
+
+TPESamplerは動作し始めるまでにデフォルトでは10 Trial分の結果を貯める必要があるから最低でもこのPrunerで作成される子Prunerの数 × 10 Trialの分だけは試行を完了させないと本領を発揮し始めてくれない。
+
+だからPrunerを3つ作成する場合は少なくとも`n_trials`を30以上に指定しないとあんまり意味ないよって感じだね。
+
+これは特になるべく短時間でざっくり最適化したいケースで気を付けるべきなんだと思う。
+
+HyperBandは毎回の試行を短時間で済ませる方向に調整すればするほど子Prunerの数が増えていくけど、そうすると逆にどんどん確率的な探索が効果を出し始めるタイミングが遅くなる上に最低限必要な必要な総試行回数も増えてしまって本末転倒、といったことが起こり得る。
+
+短時間でざっくり方向に超寄せたい場合は単一のSuccessiveHalvingを使った方が便利なのかもね。HyperBandはどちらかというとそれなりの時間を確保できること前提な上で切るところは切って効率化していきたいっていう場合に向いてるのかも。
+
+あんまり`n_trials`を大きくできないけどHyperBandを使いたい場合は適宜Pruner数が妥当かどうか確認してみてね。
+
+**HyperBandの子Pruner数を求めるPythonコード**
+
+```python
+import math
+
+def compute_n_pruners(min_resource: int, max_resource: int, reduction_factor: float):
+    r = max_resource / min_resource
+    rl = math.log(r, reduction_factor)
+    return math.floor(rl) + 1
+```
 
 ### [PatientPruner](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.pruners.PatientPruner.html)
 
-これはちょっと変わり種で他のPrunerと組み合わせて使うPruner。
+他のPrunerと組み合わせて使う変わり種のPruner。
 
 EarlyStoppingによくあるnステップの間スコアが向上しなかったら~的な条件を任意のPrunerと組み合わせられるようになる。
 
@@ -518,15 +640,15 @@ EarlyStoppingによくあるnステップの間スコアが向上しなかった
 
 実は`create_study()`する時って何もしなくてもデフォルトでMedianPrunerが指定されるんだよね。
 
-だから学習のコールバックで打ち切り判定するようにしてるとMedianPrunerが動作しちゃうんだけどそれを明示的に無効にしたい時に使える。
+だから学習のコールバックで打ち切り判定するようにしてると勝手にMedianPrunerが動作しちゃうんだけどそれを明示的に無効にしたい時に使える。
 
 ## Samplerの指定
 
 Optunaでは都度の試行の度に指定した範囲内から採用するパラメータの値を選んでくれるアルゴリズムを`Sampler`って呼んでる。
 
-デフォルトでは`TPESampler`っていうベイズ最適化の一種が使われるようになってて、必要な場合は任意のものを指定することが出来る。
+デフォルトでは[`TPESampler`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.samplers.TPESampler.html)っていうベイズ最適化の一種が使われるようになってて、必要な場合は任意のものを指定することが出来る。
 
-多分Samplerはあまり変えないと思うんだけどグリッドサーチに使える[`GridSampler`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.samplers.GridSampler.html)やランダムサーチの[`RandomSampler`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.samplers.RandomSampler.html)などが用意されてるよ。
+多分Samplerはあまり変えないと思うんだけど他にもグリッドサーチに使える[`GridSampler`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.samplers.GridSampler.html)やランダムサーチの[`RandomSampler`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.samplers.RandomSampler.html)などが用意されてるよ。
 
 Prunerを使った枝刈りとグリッドサーチやランダムサーチを組み合わせて扱いたい場合に便利だね。
 
@@ -541,7 +663,7 @@ Optunaが公式で推してる使い分けはこんな感じ。
       - 連続値 → `CmaEsSampler` or ランダムサーチ
       - カテゴリカル → 遺伝的アルゴリズム or ランダムサーチ
 
-SamplerによってPrunerとの相性の良し悪しもあるみたいで、TPESamplerにはHyperBand, RandomSamplerにはMedianPrunerを使うと良いみたい。
+SamplerによってPrunerとの相性の良し悪しもあるみたいで、TPESamplerにはHyperBandPruner, RandomSamplerにはMedianPrunerを使うと良いみたい。
 
 ## その他のちょっと便利な機能
 
@@ -551,7 +673,7 @@ SamplerによってPrunerとの相性の良し悪しもあるみたいで、TPES
 
 放置して自動で最適化だ！ってワクワクしながら出かけて後で確認したら割と早い段階でエラー吐いて止まってた。とかね。あるあるだよね。
 
-そういう時は`optimize()`の`catch`オプションに無視して次に進んでほしい例外クラスをTupleで指定しておくとスルーしてくれるようになる。
+そういう時は`optimize()`の`catch`オプションに無視してほしい例外クラスをTupleで指定しておくとスルーしてくれるようになる。
 
 LightGBMが学習時にraiseしてくるエラーを無視する例はこんな感じ。
 
@@ -613,7 +735,7 @@ optuna.logging.set_verbosity(optuna.logging.FATAL)
 
 ### Parallel Coordinates
 
-なんかこういうの可視化でよくあるよね。良い感じのゴールに対して線が集中してるところが良い組み合わせ、みたいなそういう感じ？
+なんかこういうの可視化でよくあるよね。良い感じのゴールに対して線が集中してるところが良い組み合わせ、みたいなそういう感じかな？
 
 ![](02-parallel-coordinate.jpg)
 
@@ -625,7 +747,7 @@ optuna.logging.set_verbosity(optuna.logging.FATAL)
 
 ### スコアの累積出現率
 
-探索をうまく収束させられてない時はこの図がガビガビの変な感じになるよ。この例は割と良い感じに進んでるっぽいパターン。
+探索をうまく収束させられてない時はこの図がガクンとした崖状になるよ。この例は割と良い感じに進んでるっぽいパターン。
 
 ![](04-edf.jpg)
 
@@ -657,4 +779,4 @@ Optunaの素晴らしさの一端を少しでも紹介できてると嬉しい�
 
 スキルが圧倒的に足りないとは思うけどめちゃめちゃお世話になってるからいつかコントリビュートして恩返ししたい。
 
-いつもありがとう、Optuna！！
+Optuna、いつもありがとう！

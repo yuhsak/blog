@@ -48,10 +48,10 @@ module.exports = {
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
           {
-            resolve: "gatsby-remark-external-links",
+            resolve: 'gatsby-remark-external-links',
             options: {
-              target: "_blank",
-              rel: "noopener noreferrer nofollow",
+              target: '_blank',
+              rel: 'noopener noreferrer nofollow',
             },
           },
           {
@@ -89,13 +89,13 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map(node => {
+              return allMarkdownRemark.nodes.map((node) => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
+                  custom_elements: [{ 'content:encoded': node.html }],
                 })
               })
             },
@@ -118,8 +118,8 @@ module.exports = {
                 }
               }
             `,
-            output: "/rss.xml",
-            title: " RSS Feed by Notes for hacks",
+            output: '/rss.xml',
+            title: ' RSS Feed by Notes for hacks',
           },
         ],
       },
@@ -147,7 +147,7 @@ module.exports = {
       options: {
         // You can add multiple tracking ids and a pageview event will be fired for all of them.
         trackingIds: [
-          "G-3ENRB065B2", // Google Analytics / GA
+          'G-3ENRB065B2', // Google Analytics / GA
           // "AW-CONVERSION_ID", // Google Ads / Adwords / AW
           // "DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
         ],
@@ -171,6 +171,6 @@ module.exports = {
         },
       },
     },
-    "gatsby-plugin-sitemap",
+    'gatsby-plugin-sitemap',
   ],
 }

@@ -5,9 +5,9 @@
  * See: https://www.gatsbyjs.com/docs/use-static-query/
  */
 
-import * as React from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import * as React from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
@@ -31,7 +31,7 @@ const Bio = () => {
   const { author, description, social } = data.site.siteMetadata
 
   return (
-    <div className="bio">
+    <div className='bio'>
       {/* <StaticImage
         className="bio-avatar"
         layout="fixed"

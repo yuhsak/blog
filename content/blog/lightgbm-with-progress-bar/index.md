@@ -1,9 +1,9 @@
 ---
 title: LightGBMの進捗をプログレスバーで表示する
-date: "2022-02-28T02:11:02.750Z"
-description: "見やすいしテンション上がるやつ"
-category: "データサイエンス"
-tags: ["機械学習", "Python", "LightGBM", "tqdm", "小ネタ"]
+date: '2022-02-28T02:11:02.750Z'
+description: '見やすいしテンション上がるやつ'
+category: 'データサイエンス'
+tags: ['機械学習', 'Python', 'LightGBM', 'tqdm', '小ネタ']
 ---
 
 学習の進捗がずらずらっと標準出力に出てきちゃうの邪魔だよね。特にNotebook環境の時はすごい見にくくなるし。

@@ -1,9 +1,9 @@
 ---
 title: Google ColaboratoryでカスタムVMを使ってみる
-date: "2022-02-24T06:07:10.771Z"
-description: "Pro+でもメモリが足りない…でも学習させたい"
-category: "データサイエンス"
-tags: ["機械学習", "Google Colaboratory", "Google Cloud Platform"]
+date: '2022-02-24T06:07:10.771Z'
+description: 'Pro+でもメモリが足りない…でも学習させたい'
+category: 'データサイエンス'
+tags: ['機械学習', 'Google Colaboratory', 'Google Cloud Platform']
 ---
 
 Google Colaboratory本当に便利だよね。
