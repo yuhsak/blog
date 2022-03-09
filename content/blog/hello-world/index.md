@@ -14,12 +14,16 @@ tags: ['Node.js', 'Gatsby', 'NEXT.JS', 'Remix']
 
 そんで今立ち上げるなら静的サイトジェネレータ系一択だなと思って[Hugo](https://gohugo.io)と[Gatsby](https://www.gatsbyjs.com)で迷った結果Gatsbyでやることにした。
 
-何か流行ってるのは知っていたけど使ったのは初めて。すごい良いね。  
+何か流行ってるのは知っていたけど使ったのは初めて。すごい良いね。
+
 一回ページ読み込んだ後はクライアントサイドで画面遷移するから動作がめちゃくちゃ速い。[DEV](https://dev.to)みたい。  
 ローカルのプレビューもサクサク動くしちゃんと保存する度に更新されるし。
 
-最初GitHubからNetlifyとかに連携してデプロイするつもりでいたら公式で[Gatsby Cloud](https://www.gatsbyjs.com/products/cloud)というマネージドホスティングを始めていたのを発見。  
-公式サイトからGitHubアカウントと連携→テンプレート選択とポチポチ進めるだけでサイトがデプロイされてしまった。  
+## Gatsby Cloudいい感じ
+
+最初GitHubからNetlifyとかに連携してデプロイするつもりでいたら公式で[Gatsby Cloud](https://www.gatsbyjs.com/products/cloud)というマネージドホスティングを始めていたのを発見。
+
+公式サイトからGitHubアカウントと連携→テンプレート選択とポチポチ進めるだけでサイトがデプロイされてしまった。
 あとはローカルで編集したのをpushすればその度に自動でビルドが走ってデプロイまでされるみたい。超便利。
 
 [Pricing](https://www.gatsbyjs.com/pricing)を見ると今のところ `Free/$0` `Professional/$50` `Enterprise/$相談` の3パターンの料金体系がある。個人サイトならFreeでも十分そう。大事な項目だけ抜粋するとこんな感じ↓
@@ -52,6 +56,8 @@ tags: ['Node.js', 'Gatsby', 'NEXT.JS', 'Remix']
 料金表を見てたらServerless Functionsという項目があることに気が付いて調べてみるとまぁその名の通りサイトに動的なAPIを生やせる機能みたいだった。[NEXT.JS](https://nextjs.org)の[Vercel](https://vercel.com)にもあるやつ。
 
 NEXTのAPI Routesもそうだけど、どんなに簡素でもいいからフレームワークなりプラットフォームなりが公式に推奨してるユースケースの範囲内で任意の処理を走らせられる機構があるのと無いのとでは取り回しの良さが段違いに変わってくるから嬉しいポイント。
+
+## 最近のホスティングすごい
 
 それにしてもVercel, Netlify, Firebase Hostingしかり最近のマネージドホスティング系のサービスはデフォルトでFastlyとかのめっちゃ速いCDNが前段に置かれててすごいね。
 
