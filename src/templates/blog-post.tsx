@@ -1,14 +1,88 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { Link, graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 import Layout from '../components/layout'
 import Seo from '../components/seo'
 
+type TableOfContentsItemData = {
+  url: string
+  title: string
+  items?: TableOfContentsItemData[]
+}
+
+const TableOfContentsItem: React.FC<
+  TableOfContentsItemData & {
+    activeIndexId?: undefined | string
+    onClick?: undefined | ((url: string) => void)
+    depth?: number
+  }
+> = ({ url, title, items, activeIndexId, onClick, depth = 0 }) => {
+  return (
+    <li>
+      <a
+        href={url}
+        className={activeIndexId === url ? 'active' : ''}
+        onClick={() => {
+          onClick?.(url)
+        }}
+      >
+        {title}
+      </a>
+      {/* make cond value larger than 0 to render h3, h4 and so on. */}
+      {items && depth < 0 && (
+        <ul style={{ paddingLeft: `${(depth + 1) * 16}px` }}>
+          {items.map((item) => (
+            <TableOfContentsItem
+              key={item.url}
+              {...item}
+              activeIndexId={activeIndexId}
+              onClick={onClick}
+              depth={depth + 1}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  )
+}
+
 const BlogPostTemplate = ({ data, location }: any) => {
   const post = data.mdx
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
+
+  const [activeIndexId, setActiveIndexId] = useState<string>()
+
+  useEffect(() => {
+    console.log('fire')
+
+    const headings = document.querySelectorAll('h2')
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveIndexId(`#${entry.target.id}`)
+          }
+        })
+      },
+      {
+        root: null,
+        rootMargin: '-20% 0px',
+        threshold: 0, // 閾値は0
+      },
+    )
+
+    headings.forEach((heading) => {
+      observer.observe(heading)
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [location.pathname])
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -32,7 +106,27 @@ const BlogPostTemplate = ({ data, location }: any) => {
           <section itemProp='articleBody' style={{ flex: 1, minWidth: '1em' }}>
             <MDXRenderer>{post.body}</MDXRenderer>
           </section>
-          {/* <div style={{ flex: 1, backgroundColor: 'red' }}>a</div> */}
+          <ul
+            className='table-of-contents'
+            style={{
+              width: '192px',
+              position: 'sticky',
+              top: 0,
+              marginLeft: '32px',
+              overflowY: 'scroll',
+            }}
+          >
+            {post.tableOfContents.items.map((item: any) => (
+              <TableOfContentsItem
+                key={item.url}
+                {...item}
+                activeIndexId={activeIndexId}
+                onClick={(url) => {
+                  setActiveIndexId(url)
+                }}
+              />
+            ))}
+          </ul>
         </div>
       </article>
       <hr />
@@ -84,6 +178,7 @@ export const pageQuery = graphql`
         date(formatString: "YYYY/MM/DD")
         description
       }
+      tableOfContents
     }
     previous: mdx(id: { eq: $previousPostId }) {
       fields {

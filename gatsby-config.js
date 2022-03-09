@@ -59,13 +59,15 @@ module.exports = {
               rel: 'noopener noreferrer',
             },
           },
-          {
-            resolve: `gatsby-remark-katex`,
-            options: {
-              strict: `ignore`,
-            },
-          },
+          // {
+          //   resolve: `gatsby-remark-katex`,
+          //   options: {
+          //     strict: `ignore`,
+          //   },
+          // },
         ],
+        remarkPlugins: [require('remark-math')],
+        rehypePlugins: [[require('rehype-katex'), { strict: 'ignore' }]],
         // remarkPlugins: [require('remark-math'), require('remark-html-katex')],
       },
     },
