@@ -1,0 +1,142 @@
+---
+title: gatsby-plugin-mdxでKaTeXを使えるようにする
+date: '2022-03-09T19:39:57.392Z'
+description: 'やっぱサクッと数式書けると嬉しいね'
+category: 'Web開発'
+tags: ['Gatsby', 'MDX', 'KaTeX']
+---
+
+import { useState } from 'react'
+
+export const Counter = () => {
+  const [count, setCount] = useState(0)
+  const handle = () => setCount((n) => n + 1)
+  return <button onClick={handle}>{count} クリック</button>
+}
+
+最近マークダウンのレンダラを[`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark)から[`gatsby-plugin-mdx`](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx)に変えた。
+
+当初はどうせマークダウンで書くなら独自仕様を避けたプレーンな形式にしておけば例えば後から簡単にObsidianに移行したりも出来るからなるべくそうしようと思ってたんだけど、よく考えたらブログ記事をObsidianに移行することって多分永遠にないよね🤔？笑
+
+そう考えるとPlotlyのグラフとかもサクッと書いて記事に埋め込めるようになって素敵だしもういっそのこと[MDX](https://mdxjs.com)にしよう、みたいな。
+
+実行環境の制約はあれどMDX自体もポータブルなのは変わらないしね。
+
+MDXすごいよね、最初知った時はマークダウンにJSXが直接書けるって何事!?って思って超びびったよ。笑
+
+文章書いてる流れのままJSXコンポーネントも挟めるってマジで革命的だと思う。
+
+万が一記事中にクリックカウンターを表示したくなった時だってMDXならこの通り…!!
+
+<Counter />
+
+## KaTeXだけ動かない問題
+
+レンダラの移行自体は思ったより全然手間取ることなくサクッと出来た。
+
+`gatsby-transformer-remark`を`gatsby-plugin-mdx`に差し替えて、`allMarkdownRemarks` → `allMdx` みたくプロパティ名変わるとこ変えて、remarkの`plugins`に入れてたやつらをmdxの`gatsbyRemarkPlugins`に引っ越す。ほぼほぼこれだけ。
+
+ただ1点だけ、数式の表示に使っていた`gatsby-remark-katex`だけはどうしてもmdxと一緒に動かすことができず。
+
+でもちょっと調べて工夫したらいけたので備忘録がてらにメモ。
+
+## 対象のバージョン
+
+`gatsby@4.9.3` `gatsby-plugin-mdx@3.9.1`
+
+## 先に結論
+
+`gatsby-remark-katex`を使うのをやめて`remark-math`と`rehype-katex`を使うと上手くいく。
+
+現時点では`remark-math`は4系, `rehype-katex`は6系が最新なんだけど、ポイントは1つ古いメジャーバージョンの`remark-math@3.0.1`と`rehype-katex@5.0.0`を使うこと。
+
+そうすることで依存関係の不具合が解消されて動くようになる。
+
+ちなみに肝心の`katex`は`rehype-katex`のdependencyとして一緒にくっついてくるので`gatsby-remark-katex`の時みたいに明示的にインストールしなくても大丈夫。
+
+## やり方
+
+```shell
+npm install remark-math@3.0.1 rehype-katex@5.0.0
+```
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        remarkPlugins: [
+          require('remark-math'),
+        ],
+        rehypePlugins: [
+          require('rehype-katex'),
+          // オプションを渡したい時はタプル形式で
+          // [require('rehype-katex'), { strict: 'ignore' }],
+        ],
+      }
+    }
+  ]
+}
+```
+
+```js:title=gatsby-browser.js
+import 'katex/dist/katex.min.css'
+```
+
+これでMDX環境でも$\Large \KaTeX$が書ける。やったね！
+
+## もうちょっと細かい説明
+
+### `gatsby-remark-katex`が動かない理由
+
+そもそもremark系のプラグインのほとんどが`gatsby-plugin-mdx`でも動作するんだから`gatsby-remark-katex`もしれっと動いてほしいところだよね。
+
+この書き方で上手くいってほしい！けど動かない😇
+
+```js:title=gatsby-config.js
+/* 動かないパターン */
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins: [
+          'gatsby-remark-katex',
+        ],
+      }
+    }
+  ]
+}
+```
+
+原因は`gatsby-plugin-mdx`で利用している`@mdx-js/mdx@1.0.0`で使われてるremarkが1つ前の12系だから。
+
+よく見るとGatsbyのログの中でもバージョン上げないと動かないよって言ってくれてるね。
+
+```shell
+warn [remark-math] Warning: please upgrade to remark 13 to use this plugin
+```
+
+`remark-math`というのは`gatsby-remark-katex`の中で使われているモジュールなんだけど、これが4系だとremarkの方は13系以上の必要があるみたい。
+
+だから逆に`gatsby-remark-katex`を使わずに12系に対応した`remark-math`のバージョンを直接使うようにすればとりあえずいけるってわけね。
+
+`@mdx-js/mdx`のissue見た感じだとv2からはremarkも13系にアップデートされてるみたいだから`gatsby-plugin-mdx`が対応し次第自然に解消されるはず…なんだけど少し時間がかかるかもね。
+
+[MDX v2: ☂️ Umbrella issue #1041](https://github.com/mdx-js/mdx/issues/1041)
+
+ってゆーかremarkの13系以上を前提にしてるプラグインをMDX環境で使おうとすると全部同様の問題にぶつかる可能性があるってことかな？覚えておこう。
+
+### `remark-math`と`rehype-katex`なに
+
+↓こういうことみたい。
+
+- `remark-math`
+  - md→html変換の際に\$でくくられた部分をLaTeX表記のブロックに変換する
+  - 例) `$\frac{1}{N}$` → `<span class="math math-inline">\frac{1}{N}</span>`
+- `rehype-katex`
+  - 変換されたhtmlを受け取ってLaTeX表記の部分にKaTeXのスタイルを当てる
+  - 例) `<span class="math math-inline">\frac{1}{N}</span>` → $\Large \frac{1}{N}$
+
+mdから変換したhtmlに対して色々する系の処理をremarkでは`rehype`って言うみたいだね。これも覚えとこ。
