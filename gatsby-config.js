@@ -1,3 +1,6 @@
+// import remarkMath from 'remark-math'
+// import remarkHtmlKatex from 'remark-html-katex'
+
 module.exports = {
   siteMetadata: {
     title: `Notes for hacks`,
@@ -28,9 +31,11 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        plugins: [
+        extensions: [`.md`, `.mdx`],
+        gatsbyRemarkPlugins: [
+          `gatsby-remark-autolink-headers`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -51,7 +56,7 @@ module.exports = {
             resolve: 'gatsby-remark-external-links',
             options: {
               target: '_blank',
-              rel: 'noopener noreferrer nofollow',
+              rel: 'noopener noreferrer',
             },
           },
           {
@@ -61,6 +66,7 @@ module.exports = {
             },
           },
         ],
+        // remarkPlugins: [require('remark-math'), require('remark-html-katex')],
       },
     },
     `gatsby-transformer-sharp`,
@@ -88,8 +94,8 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map((node) => {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.nodes.map((node) => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
@@ -101,7 +107,7 @@ module.exports = {
             },
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
                 ) {
                   nodes {

@@ -26,7 +26,7 @@ const Layout = ({ location, title, children }) => {
       <main>{children}</main>
       <footer>
         by{' '}
-        <a href='https://twitter.com/YuhsakInoue' target='_blank'>
+        <a href='https://twitter.com/YuhsakInoue' target='_blank' rel='noreferrer'>
           @YuhsakInoue
         </a>
       </footer>
