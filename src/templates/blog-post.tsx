@@ -53,18 +53,22 @@ const BlogPostTemplate = ({ data, location }: any) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
 
-  const [activeIndexId, setActiveIndexId] = useState<string>()
+  const [activeIndexId, _setActiveIndexId] = useState<string>()
+
+  const setActiveIndexId = (idOrHash: string) => {
+    idOrHash = idOrHash.startsWith('#') ? idOrHash : `#${idOrHash}`
+    _setActiveIndexId(idOrHash)
+    history.pushState(null, '', idOrHash)
+  }
 
   useEffect(() => {
-    console.log('fire')
-
     const headings = document.querySelectorAll('h2')
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveIndexId(`#${entry.target.id}`)
+            setActiveIndexId(entry.target.id)
           }
         })
       },
@@ -121,9 +125,7 @@ const BlogPostTemplate = ({ data, location }: any) => {
                 key={item.url}
                 {...item}
                 activeIndexId={activeIndexId}
-                onClick={(url) => {
-                  setActiveIndexId(url)
-                }}
+                onClick={setActiveIndexId}
               />
             ))}
           </ul>

@@ -413,6 +413,33 @@ a:focus {
   background-color: rgba(17, 17, 26, 0.05);
 }
 
+.blog-post .gatsby-code-title {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-bottom: -0.6rem;
+  padding: 0.6125em 1.25em;
+  position: relative;
+
+  font-size: var(--fontSize-0);
+  font-weight: var(--fontWeight-semibold);
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+
+  background-color: black;
+  color: white;
+
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+}
+
+.blog-post .gatsby-code-title + .gatsby-highlight {
+  position: relative;
+}
+
+.blog-post .gatsby-code-title + .gatsby-highlight pre {
+  /* border-top-right-radius: 0px; */
+  border-top-left-radius: 0px;
+}
+
 .blog-post-nav {
   margin-top: var(--spacing-6);
 }
@@ -423,10 +450,35 @@ a:focus {
 
 .gatsby-highlight {
   margin-bottom: var(--spacing-8);
+  font-size: 0.8em;
 }
 
 .katex {
   font-size: 1em !important;
+}
+
+span.command-line-prompt {
+  border-right: none;
+  margin-right: 0;
+}
+
+span.command-line-prompt > span:before {
+  color: #999;
+  opacity: 0.55;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: '[' attr(data-user) '@' attr(data-host) '] $';
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user='root']:before {
+  content: '[' attr(data-user) '@' attr(data-host) '] #';
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
 }
 
 /* Media queries */

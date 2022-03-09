@@ -94,12 +94,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Mdx implements Node {
       frontmatter: Frontmatter
       fields: Fields
+      tableOfContents: JSON
     }
 
     type Frontmatter {
       title: String
       description: String
       date: Date @dateformat
+      category: String
+      tags: [String]
     }
 
     type Fields {
