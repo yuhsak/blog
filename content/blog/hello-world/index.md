@@ -2,7 +2,7 @@
 title: Hello, world!
 date: '2022-02-18T04:23:39.841Z'
 description: 'とうとう技術ブログを開設。Gatsbyっていいね'
-category: 'Web開発'
+category: '雑記'
 tags: ['Node.js', 'Gatsby', 'NEXT.JS', 'Remix']
 ---
 
