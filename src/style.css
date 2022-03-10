@@ -42,10 +42,10 @@
   --fontWeight-black: 900;
   --fontSize-root: 16px;
   --lineHeight-none: 1;
-  --lineHeight-tight: 1.5;
-  --lineHeight-normal: 1.75;
-  --lineHeight-relaxed: 1.75;
-  --letterSpacing: 0.05em;
+  --lineHeight-tight: 1.6;
+  --lineHeight-normal: 1.85;
+  --lineHeight-relaxed: 1.85;
+  --letterSpacing: 0.08em;
   /* 1.200 Minor Third Type Scale */
   --fontSize-0: 0.833rem;
   --fontSize-1: 1rem;
@@ -61,6 +61,7 @@
   --color-heading: #1a202c;
   --color-heading-black: black;
   --color-accent: #d1dce5;
+  --color-bg: #fff;
 }
 
 /* HTML elements */
@@ -180,8 +181,6 @@ p {
   --x-height-multiplier: 0.35;
   margin: var(--spacing-0) var(--spacing-0) var(--spacing-8) var(--spacing-0);
   padding: var(--spacing-0);
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
 ul,
@@ -239,7 +238,7 @@ table {
   margin-bottom: var(--spacing-8);
   border-collapse: collapse;
   border-spacing: 0.25rem;
-  font-size: 0.8em;
+  font-size: 0.75em;
 }
 
 table thead tr th {
@@ -249,6 +248,24 @@ table thead tr th {
 
 table tbody tr td {
   padding: var(--spacing-1) 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li,
+blockquote,
+code,
+pre,
+th,
+td {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 /* Link */
@@ -382,6 +399,8 @@ a:focus {
 .blog-post ul.table-of-contents {
   margin: 0;
   padding: 0;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  border-radius: 4px;
 }
 
 .blog-post ul.table-of-contents ul {
@@ -399,7 +418,7 @@ a:focus {
   text-decoration: none;
   color: var(--color-text-light);
   display: block;
-  padding: var(--spacing-1);
+  padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--fontSize-0);
 }
 

@@ -55,20 +55,25 @@ const BlogPostTemplate = ({ data, location }: any) => {
 
   const [activeIndexId, _setActiveIndexId] = useState<string>()
 
-  const setActiveIndexId = (idOrHash: string) => {
+  const setActiveIndexId = (delay?: number) => (idOrHash: string) => {
     idOrHash = idOrHash.startsWith('#') ? idOrHash : `#${idOrHash}`
-    _setActiveIndexId(idOrHash)
-    history.pushState(null, '', idOrHash)
+    const handle = () => {
+      _setActiveIndexId(idOrHash)
+      history.pushState(null, '', idOrHash)
+    }
+    const exec = delay ? () => setTimeout(handle, delay) : handle
+    exec()
   }
 
   useEffect(() => {
     const headings = document.querySelectorAll('h2')
+    const handle = setActiveIndexId()
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveIndexId(entry.target.id)
+            handle(entry.target.id)
           }
         })
       },
@@ -79,9 +84,7 @@ const BlogPostTemplate = ({ data, location }: any) => {
       },
     )
 
-    headings.forEach((heading) => {
-      observer.observe(heading)
-    })
+    headings.forEach(observer.observe.bind(observer))
 
     return () => {
       observer.disconnect()
@@ -116,7 +119,7 @@ const BlogPostTemplate = ({ data, location }: any) => {
               width: '192px',
               position: 'sticky',
               top: 0,
-              marginLeft: '32px',
+              marginLeft: 'var(--spacing-12)',
               overflowY: 'scroll',
             }}
           >
@@ -125,7 +128,7 @@ const BlogPostTemplate = ({ data, location }: any) => {
                 key={item.url}
                 {...item}
                 activeIndexId={activeIndexId}
-                onClick={setActiveIndexId}
+                onClick={setActiveIndexId(100)}
               />
             ))}
           </ul>

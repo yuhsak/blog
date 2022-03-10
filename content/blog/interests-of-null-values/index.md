@@ -12,7 +12,11 @@ Webそのものに関する情報をWebで検索しているから高度なレ�
 
 お料理、医療、スポーツetc全部ひっくるめた各ジャンルのアクティビティごとに「Webで得られる情報の充実度」みたいな指標があったとしたら、多分Web開発というジャンルの充実度はずば抜けて高い位置にあるんじゃないかな。当たり前？笑
 
-こうしてITに近い業界の人たちほどWebの利便性をよく知った上で日々活用しているからこそ「有益な情報や便利なものはもう既にWeb上のどこかにある」みたいな感覚になりがち…だけど実はWebから有益な情報や機能性をあまり享受できない人の方が全然たくさんいるというのはあって、そこを感覚的に理解できているかどうかがWeb開発に携わる人間として大切なポイントな気がしているよ。
+こうしてWebの利便性をよく知った上で日々活用しているIT業界の人たちほど「有益な情報や便利なものはもう既にWeb上のどこかにある」みたいな感覚になりがち…
+
+だけど実はWebから有益な情報や機能性をあまり享受できない人の方が全然たくさんいるというのはあって、そこを感覚的に理解できているかどうかがWeb開発に携わる人間として大切なポイントな気がしているよ。
+
+## 前置き
 
 で、個人的にデータ分析や機械学習についてもWeb開発系の充実度と比べたらWeb上の情報が充実してないなーと思うことが多くて。
 
@@ -20,7 +24,7 @@ Webそのものに関する情報をWebで検索しているから高度なレ�
 
 まぁこれに関しては自分に理論的な理解が欠けているがために論文で公表された知恵を実務に活かせるレベルにないだけというのが正解な気はしているんだけど、今は置いておこう。勉強しよ。
 
-まぁまぁ。ということでこのブログでは自分が日々データと格闘する中で得た知見も積極的に公開していけたら良いなと思っていて、ゆーて全然レベル低いんだけど少しでも誰かのお役に立つことがあれば何より。
+ということでこのブログでは自分が日々データと格闘する中で得た知見も積極的に公開していけたら良いなと思っていて、ゆーて全然レベル低いんだけど少しでも誰かのお役に立つことがあれば何より。
 
 前述の通り理論的なことが全然分かってないのでやってみたらこうなったレベルのお話ばかりになってしまうのは容赦して欲しい。
 
@@ -114,7 +118,7 @@ df["standardized_count_na"] = (
 
 欠損してること自体が有用な特徴になってる場合、LightGBMでは下手に補完すると逆に精度が下がることが多いっていう性質を利用して前処理しないパターンと補完したパターン両方で学習して精度を比較してみるという。実に乱暴…笑
 
-```py
+```python
 # 結果を再現できるようにseed固定でdeterministicを指定しておく
 params = {
     "boosting": "gbdt",
@@ -123,7 +127,9 @@ params = {
     "seed": 42,
     "deterministic": True,
 }
+```
 
+```python
 # 欠損値そのままのデータセット
 dataset_train_na = lgbm.Dataset(x_train_na, y_train)
 dataset_valid_na = lgbm.Dataset(x_valid_na, y_valid, reference=dataset_train_na)
@@ -135,7 +141,9 @@ model_na = lgbm.train(
   num_boost_round=1000,
   callbacks=[lgbm.early_stopping(100)],
 )
+```
 
+```python
 # 欠損値を補完したデータセット
 dataset_train_fillna = lgbm.Dataset(x_train_fillna, y_train)
 dataset_valid_fillna = lgbm.Dataset(x_valid_fillna, y_valid, reference=dataset_train_fillna)
@@ -147,11 +155,13 @@ model_fillna = lgbm.train(
   num_boost_round=1000,
   callbacks=[lgbm.early_stopping(100)],
 )
+```
 
+```python
+# 顕著に差があるかどうか確認してみる
 metric_na = model_na.best_score["valid_0"]["binary_logloss"]
 metric_fillna = model_fillna.best_score["valid_0"]["binary_logloss"]
 
-# 顕著に差があるかどうか確認してみる
 print("na    :", metric_na)
 print("fillna:", metric_fillna)
 print("diff  :", metric_na - metric_fillna)

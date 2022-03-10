@@ -11,7 +11,11 @@ import { useState } from 'react'
 export const Counter = () => {
   const [count, setCount] = useState(0)
   const handle = () => setCount((n) => n + 1)
-  return <button onClick={handle}>{count} クリック</button>
+  return (
+    <button style={{ marginBottom: 'var(--spacing-8)' }} onClick={handle}>
+      {count} クリック
+    </button>
+  )
 }
 
 最近マークダウンのレンダラを[`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark)から[`gatsby-plugin-mdx`](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx)に変えた。
@@ -26,7 +30,7 @@ MDXすごいよね、最初知った時はマークダウンにJSXが直接書�
 
 文章書いてる流れのままJSXコンポーネントも挟めるってマジで革命的だと思う。
 
-万が一記事中にクリックカウンターを表示したくなった時だってMDXならこの通り…!!
+万が一記事中に突然クリックカウンターを表示したくなった時だってMDXならこの通り…!!
 
 <Counter />
 
