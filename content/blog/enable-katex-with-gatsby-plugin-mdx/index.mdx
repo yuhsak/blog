@@ -6,6 +6,8 @@ category: 'Web開発'
 tags: ['Gatsby', 'MDX', 'KaTeX']
 ---
 
+import { IpynbRenderer } from 'react-ipynb-renderer'
+
 import { useState } from 'react'
 
 export const Counter = () => {
@@ -18,9 +20,27 @@ export const Counter = () => {
   )
 }
 
+export const Notebook = ({ ipynb }) => {
+  return (
+    <IpynbRenderer
+      ipynb={ipynb}
+      syntaxTheme='tomorrow'
+      language='python'
+      bgTransparent={false}
+      formulaOptions={{
+        katex: {
+          katexOptions: {
+            strict: 'ignore',
+          },
+        },
+      }}
+    />
+  )
+}
+
 最近マークダウンのレンダラを[`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark)から[`gatsby-plugin-mdx`](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx)に変えた。
 
-当初はどうせマークダウンで書くなら独自仕様を避けたプレーンな形式にしておけば例えば後から簡単にObsidianに移行したりも出来るからなるべくそうしようと思ってたんだけど、よく考えたらブログ記事をObsidianに移行することって多分永遠にないよね🤔？笑
+当初はどうせマークダウンで書くなら独自仕様を避けたプレーンな形式にしておけば後から簡単にObsidianに移行したりも出来るからなるべくそうしようと思ってたんだけど、よく考えたらブログ記事をObsidianに移行することって多分永遠にないよね🤔？笑
 
 そう考えるとPlotlyのグラフとかもサクッと書いて記事に埋め込めるようになって素敵だしもういっそのこと[MDX](https://mdxjs.com)にしよう、みたいな。
 
@@ -38,9 +58,17 @@ MDXすごいよね、最初知った時はマークダウンにJSXが直接書�
 
 レンダラの移行自体は思ったより全然手間取ることなくサクッと出来た。
 
-`gatsby-transformer-remark`を`gatsby-plugin-mdx`に差し替えて、`allMarkdownRemarks` → `allMdx` みたくプロパティ名変わるとこ変えて、remarkの`plugins`に入れてたやつらをmdxの`gatsbyRemarkPlugins`に引っ越す。ほぼほぼこれだけ。
+- `gatsby-transformer-remark`を`gatsby-plugin-mdx`に差し替える
+  - これまで書いてきた`.md`も読み込むように`extensions`を`['.md', '.mdx']`に指定する
+- remarkの`plugins`に入れてたやつらをmdxの`gatsbyRemarkPlugins`に引っ越す
+- プロパティ名変わるところ変える
+  - `allMarkdownRemarks` → `allMdx`
+  - `markdownRemark` → `mdx`
+  - `post.body` → `post.html`
 
-ただ1点だけ、数式の表示に使っていた`gatsby-remark-katex`だけはどうしてもmdxと一緒に動かすことができず。
+ほぼほぼこれだけ。
+
+ただ1点だけ、数式の表示に使っていた[`gatsby-remark-katex`](https://www.gatsbyjs.com/plugins/gatsby-remark-katex)だけはどうしてもmdxと一緒に動かすことができず。
 
 でもちょっと調べて工夫したらいけたので備忘録がてらにメモ。
 
@@ -50,13 +78,13 @@ MDXすごいよね、最初知った時はマークダウンにJSXが直接書�
 
 ## 先に結論
 
-`gatsby-remark-katex`を使うのをやめて`remark-math`と`rehype-katex`を使うと上手くいく。
+`gatsby-remark-katex`を使うのをやめて[`remark-math`](https://www.npmjs.com/package/remark-math)と[`rehype-katex`](https://www.npmjs.com/package/rehype-katex)を使うと上手くいく。
 
 現時点では`remark-math`は4系, `rehype-katex`は6系が最新なんだけど、ポイントは1つ古いメジャーバージョンの`remark-math@3.0.1`と`rehype-katex@5.0.0`を使うこと。
 
 そうすることで依存関係の不具合が解消されて動くようになる。
 
-ちなみに肝心の`katex`は`rehype-katex`のdependencyとして一緒にくっついてくるので`gatsby-remark-katex`の時みたいに明示的にインストールしなくても大丈夫。
+ちなみに肝心の[`katex`](https://www.npmjs.com/package/katex)は`rehype-katex`のdependencyとして一緒にくっついてくるので`gatsby-remark-katex`の時みたいに明示的にインストールしなくても大丈夫。
 
 ## やり方
 
@@ -114,7 +142,7 @@ module.exports = {
 }
 ```
 
-原因は`gatsby-plugin-mdx`で利用している`@mdx-js/mdx@1.0.0`で使われてるremarkが1つ前の12系だから。
+原因は`gatsby-plugin-mdx`で利用している[`@mdx-js/mdx`](https://www.npmjs.com/package/@mdx-js/mdx)の1系で使われてるremarkが1つ前の12系だから。
 
 よく見るとGatsbyのログの中でもバージョン上げないと動かないよって言ってくれてるね。
 
