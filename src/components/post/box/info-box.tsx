@@ -3,9 +3,9 @@ import { HiOutlineLightBulb } from 'react-icons/hi'
 
 import { Box } from './box'
 
-export const InfoBox: React.FC = ({ children }) => {
+export const InfoBox: React.FC<{ title?: string }> = ({ title, children }) => {
   return (
-    <Box className='info-box' icon={<HiOutlineLightBulb />}>
+    <Box className='info-box' title={title} icon={<HiOutlineLightBulb />}>
       {children}
     </Box>
   )

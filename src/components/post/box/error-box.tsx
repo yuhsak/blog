@@ -1,11 +1,11 @@
 import React from 'react'
-import { HiBan } from 'react-icons/hi'
+import { BiError } from 'react-icons/bi'
 
 import { Box } from './box'
 
-export const ErrorBox: React.FC = ({ children }) => {
+export const ErrorBox: React.FC<{ title?: string }> = ({ title, children }) => {
   return (
-    <Box className='error-box' icon={<HiBan />}>
+    <Box className='error-box' title={title} icon={<BiError />}>
       {children}
     </Box>
   )

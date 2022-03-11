@@ -491,7 +491,7 @@ a:focus {
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: 4px;
-  padding: var(--spacing-4);
+  padding: var(--spacing-6);
   margin-bottom: var(--spacing-8);
 }
 
@@ -511,13 +511,22 @@ a:focus {
 .blog-post .box > .content {
   flex: 1;
   font-size: var(--fontSize-0);
+  padding-top: 3px;
 }
 
-.blog-post .box > .content > * {
+.blog-post .box > .content > .title {
+  font-weight: var(--fontWeight-semibold);
+  margin-bottom: var(--spacing-4);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
+.blog-post .box > .content > .children > * {
   margin-bottom: var(--spacing-4);
 }
 
-.blog-post .box > .content > *:last-child {
+.blog-post .box > .content > .children > *:last-child {
   margin-bottom: 0;
 }
 
