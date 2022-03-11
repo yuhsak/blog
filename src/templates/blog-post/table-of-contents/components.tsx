@@ -42,14 +42,23 @@ const TableOfContentsItem: React.FC<{
   onClick?: ((activeIndexId: string) => void) | undefined
   maxDepth?: number
   depth?: number
-}> = ({ data: { title, url, items }, activeIndexId, onClick, maxDepth = 0, depth = 0 }) => {
+}> = ({
+  data: { title, url: idWithHash, items },
+  activeIndexId,
+  onClick,
+  maxDepth = 0,
+  depth = 0,
+}) => {
   return (
     <li>
       <a
-        href={url}
-        className={activeIndexId === url ? 'active' : ''}
-        onClick={() => {
-          onClick?.(url)
+        href={idWithHash}
+        className={activeIndexId === idWithHash ? 'active' : ''}
+        onClick={(e) => {
+          e.preventDefault()
+          onClick?.(idWithHash)
+          const elem = document.getElementById(idWithHash.replace(/^#/, ''))
+          elem?.scrollIntoView()
         }}
       >
         {title}

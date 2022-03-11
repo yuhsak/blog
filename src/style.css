@@ -369,13 +369,13 @@ a:focus {
 
 /* Post content */
 
-.blog-post :not(td, blockquote, blockquote > *) > strong {
-  /* text-decoration: underline;
+/* .blog-post :not(td, blockquote, blockquote > *) > strong {
+  text-decoration: underline;
   text-decoration-color: #ffeaa7cc;
   text-decoration-thickness: 8px;
   text-underline-offset: -8px;
-  text-decoration-skip-ink: none; */
-}
+  text-decoration-skip-ink: none;
+} */
 
 .blog-post header h1 {
   margin: var(--spacing-0) var(--spacing-0) var(--spacing-4) var(--spacing-0);

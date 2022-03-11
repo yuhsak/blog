@@ -20,7 +20,7 @@ tags: ['機械学習', 'Python', 'Joblib', 'tqdm', '小ネタ']
 
 [tqdm - A Fast, Extensible Progress Bar for Python and CLI](https://github.com/tqdm/tqdm)
 
-そのうちtqdm自体についても詳しく紹介する記事も書きたい。。
+そのうちtqdm自体についても詳しく紹介する記事を書きたい。。
 
 ```shell
 pip install tqdm

@@ -6,11 +6,12 @@ export const useTableOfContents = (tags: string[], url: string) => {
 
   const setActiveIndexId = (delay?: number) =>
     useCallback(
-      (idOrHash: string) => {
-        idOrHash = idOrHash.startsWith('#') ? idOrHash : `#${idOrHash}`
+      (idWithOrWithoutHash: string) => {
+        idWithOrWithoutHash = idWithOrWithoutHash.startsWith('#')
+          ? idWithOrWithoutHash
+          : `#${idWithOrWithoutHash}`
         const handle = () => {
-          _setActiveIndexId(idOrHash)
-          history.pushState(null, '', idOrHash)
+          _setActiveIndexId(idWithOrWithoutHash)
         }
         const exec = delay ? () => setTimeout(handle, delay) : handle
         exec()
