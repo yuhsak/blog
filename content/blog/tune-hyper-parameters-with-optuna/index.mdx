@@ -164,19 +164,19 @@ study.best_params
 
 パラメータの種類によって使い分けよう。`range`関数と同じでlowの値は含まれるけどhighの値は含まれないことに注意。
 
-### [`suggest_uniform(name, low, high)`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_uniform)
+### [suggest_uniform(name, low, high)](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_uniform)
 
 - float型
 - 線形空間からサンプリング
 
-### [`suggest_loguniform(name, low, high)`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_loguniform)
+### [suggest_loguniform(name, low, high)](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_loguniform)
 
 - float型
 - 対数空間からサンプリング
   - 小さい値の範囲ほど密に探索されて大きいところはその逆になる
   - 例えば1\~10の範囲では1,2,3,4,5,6,7,8,9って細かく試してみて欲しいけど100\~200では100, 140, 180とかざっくり試すだけで良いみたいなパラメータに使う
 
-### [`suggest_discrete_uniform(name, low, high, step)`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_discrete_uniform)
+### [suggest_discrete_uniform(name, low, high, step)](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_discrete_uniform)
 
 - float型
 - `step`で指定した間隔に従ったサンプリング
@@ -189,7 +189,7 @@ study.best_params
 
 </WarnBox>
 
-### [`suggest_float(name, low, high, step = None, log = False)`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_float)
+### [suggest_float(name, low, high, step = None, log = False)](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_float)
 
 - float型
 - `suggest_uniform` `suggest_loguniform` `suggest_discrete_uniform` のラッパー
@@ -198,13 +198,13 @@ study.best_params
   - どちらも指定されていない時は`suggest_uniform`
   - `step`と`log`を同時に指定することは出来ない
 
-### [`suggest_int(name, low, high, step = 1, log = False)`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_int)
+### [suggest_int(name, low, high, step = 1, log = False)](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_int)
 
 - int型
 - 線型空間からサンプリング
 - `step` `log`の動作は`suggest_float`と同じ
 
-### [`suggest_categorical(name, choices)`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_categorical)
+### [suggest_categorical(name, choices)](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_categorical)
 
 - 任意のリスト`choices`の要素から1つ選択 (boolやstrなど数値以外でも可)
   - 例) `boosting = trial.suggest_categorical("boosting", ["gbdt", "goss", "dart", "rf"])`
