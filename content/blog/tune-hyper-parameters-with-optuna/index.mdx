@@ -609,7 +609,7 @@ $$
 \small
 \begin{aligned}
 N &= \text{floor}(\log_3 \frac{1000}{100}) + 1 \\
-N &= \text{floor}(\doteqdot 2.096) + 1 \\
+N &= \text{floor}(\approx 2.096) + 1 \\
 N &=  3
 \end{aligned}
 $$
@@ -618,7 +618,7 @@ $$
 
 多分子Prunerが1個だけの時は単一のSuccessiveHalvingPrunerと同じになっちゃってあんまり意味がないと思うから適宜調整しよう。
 
-各子Prunerに与えられる`min_early_stopping_rate`は単純にそのPrunerのインデックスになるよう。Pruner1は0.0, Pruner2は1.0, Pruner3は2.0, ...。
+各子Prunerに与えられる`min_early_stopping_rate`は単純にそのPrunerのインデックスになるよう。Pruner1は0, Pruner2は1, Pruner3は2, ...。
 
 #### TrialにPrunerを割り当てる仕組み
 
@@ -659,7 +659,7 @@ $$
 
 ##### reduction_factor = 2の時
 
-作成される子Prunerの数は$\small \text{floor}(\log_2 \frac{1000}{100} \doteqdot 3.322) + 1$だから4つだね。`min_early_stopping_rate`はそれぞれ`0.0` `1.0` `2.0` `3.0`。
+作成される子Prunerの数は$\small \text{floor}(\log_2 \frac{1000}{100} \approx 3.322) + 1$だから4つだね。`min_early_stopping_rate`はそれぞれ`0.0` `1.0` `2.0` `3.0`。
 
 この構成の時の各子Prunerの判定ステップと割り当て比率、Trialが生き残る割合はこんな感じ。
 
@@ -674,7 +674,7 @@ $$
 
 ##### reduction_factor = 3の時
 
-子Prunerの数は$\small \text{floor}(\log_3 \frac{1000}{100} \doteqdot 2.096) + 1$だから3つ。
+子Prunerの数は$\small \text{floor}(\log_3 \frac{1000}{100} \approx 2.096) + 1$だから3つ。
 
 判定ステップはこう。
 
@@ -686,7 +686,7 @@ $$
 
 ##### reduction_factor = 4の時
 
-子Prunerの数は$\small \text{floor}(\log_4 \frac{1000}{100} \doteqdot 1.661) + 1$で2つ。
+子Prunerの数は$\small \text{floor}(\log_4 \frac{1000}{100} \approx 1.661) + 1$で2つ。
 
 | Index | 1回目 |     2回目 |    比率 | 生存 |
 | :---- | ----: | --------: | ------: | ---: |
