@@ -60,10 +60,10 @@ Swap:         0B        0B        0B
 
 このファイルは通常のファイルと変わらずストレージ容量を消費するから自分のVMのスペックに従って適宜変更してね。
 
-大体RAM容量の2倍ぐらいが目安と言われているよ。ここではVMのRAMが`51GB`であると想定してスワップサイズを`102GB`にしてる。
+大体RAM容量の2倍ぐらいが目安と言われているよ。ここではVMのRAMが`52GB`であると想定してスワップサイズを`104GB`にしてる。
 
 ```shell{promptUser: user}
-sudo fallocate -l 102G /home/swapfile
+sudo fallocate -l 104G /home/swapfile
 ```
 
 続いて作成したファイルを`mkswap`コマンドでスワップ領域にしよう。
@@ -87,14 +87,14 @@ sudo swapon /home/swapfile
 ```shell
            total      used      free      shared  buff/cache  available
 Mem:         51G       13G      855M         12M         36G        48G
-Swap:       102G        0B        0B
+Swap:       104G        0B        0B
 ```
 
 スワップが認識されていることが分かるね。
 
 この状態でNotebookを実行すると普段メモリ容量が足りなくてクラッシュしていたはずのタイミングでスワップが使われ始めてクラッシュを回避できるよ。動きは遅くなるんだけどね。
 
-+102GBまで多くメモリを使えるって感じだね。
++104GBまで多くメモリを使えるって感じだね。
 
 ちなみにVMを再起動するとスワップも解除されちゃうから`swapon`だけやり直そう。
 
