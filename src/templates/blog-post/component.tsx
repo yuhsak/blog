@@ -1,14 +1,53 @@
 import * as React from 'react'
-import { Link, graphql } from 'gatsby'
+import { Link, graphql, PageProps } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { MDXProvider } from '@mdx-js/react'
 
 import Layout from '../../components/layout'
 import Seo from '../../components/seo'
-import { TableOfContents } from './table-of-contents'
+import { TableOfContents, TableOfContentsItemData } from './table-of-contents'
 import { NoteBox, InfoBox, WarnBox, ErrorBox } from '../../components/post'
 
-const BlogPostTemplate = ({ data, location }: any) => {
+type DataProps = {
+  site: {
+    siteMetadata: {
+      title: string
+    }
+  }
+  mdx: {
+    id: string
+    excerpt: string
+    body: string
+    frontmatter: {
+      title: string
+      date: string
+      description: string
+      category: string
+      tags: string[]
+    }
+    tableOfContents: {
+      items: TableOfContentsItemData[]
+    }
+  }
+  previous: {
+    fields: {
+      slug: string
+    }
+    frontmatter: {
+      title: string
+    }
+  }
+  next: {
+    fields: {
+      slug: string
+    }
+    frontmatter: {
+      title: string
+    }
+  }
+}
+
+const BlogPostTemplate = ({ data, location }: PageProps<DataProps>) => {
   const post = data.mdx
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
