@@ -404,7 +404,7 @@ study.optimize(objective, n_trials=100)
 
 Prunerの基本的な使い方が分かったところでざっくり一覧を紹介していこう。
 
-ちょっと長くなっちゃったから別の記事にまとめてみたよ。
+ちょっと長くなっちゃったから[別の記事](./optuna-pruners#medianpruner)にまとめてみたよ。
 
 [OptunaのPruner一覧 | Notes for hacks](./optuna-pruners#medianpruner)
 

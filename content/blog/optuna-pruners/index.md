@@ -32,7 +32,7 @@ tags: ['機械学習', 'ハイパーパラメータチューニング', 'Optuna'
 
 <InfoBox title='基本の使い方'>
 
-基本の使い方をコード例も併せて簡単に紹介してる記事はこちら。
+基本の使い方をコード例も併せて簡単に紹介してる記事は[こちら](./tune-hyper-parameters-with-optuna#prunerで早期に枝刈り)。
 
 Pruner初見の人は使い方が分かっていた方がイメージしやすいと思うから、良かったら一覧を見る前にチェックしてみてね。
 
@@ -355,7 +355,15 @@ Successive Halving単体よりもうまくいきそうな感じがすごいね�
 
 ### 注意点
 
-このHyperBandPrunerとデフォルトのTPESampler(Samplerについては後述)を組み合わせる時は子Prunerの数を増やせば増やすほど最低限必要なTrial数も増えるってことに注意する必要があるらしい。
+このHyperBandPrunerとデフォルトのTPESamplerを組み合わせる時は子Prunerの数を増やせば増やすほど最低限必要なTrial数も増えるってことに注意する必要があるらしい。
+
+<NoteBox title='Sampler'>
+
+Samplerについては[この記事](./tune-hyper-parameters-with-optuna#samplerの指定)にちょっとした説明があるから初耳の人はチェックしてみてね。
+
+[Optunaでハイパーパラメータチューニング#Samplerの指定 | Notes for hacks](./tune-hyper-parameters-with-optuna#samplerの指定)
+
+</NoteBox>
 
 具体的には個々のTrialを複数あるSuccessiveHalvingPrunerのどれか1つに割り振る動作になる都合上それぞれのPrunerに一定数のTrial結果がたまるまでTPESamplerが機能しなくなるってことみたい。
 
