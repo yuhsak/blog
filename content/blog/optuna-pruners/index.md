@@ -417,3 +417,7 @@ EarlyStoppingによくあるnステップの間スコアが向上しなかった
 少なくともこれまで色々なタイプのモデルで使ってみた時の手応え的にはほとんどのケースで`MedianPruner`や単体の`SuccessiveHalvingPruner`よりも明らかに良いパラメータに辿り着くまでの探索効率が優れている実感があるよ。
 
 どのPrunerも有効に使えば探索を圧倒的に効率化できると思うからどんどん試してみよう。
+
+[こちらの記事](./tune-hyper-parameters-with-optuna)ではPrunerの他にも色々あるOptunaの便利な機能を紹介してるから是非チェックしてみてね。
+
+[Optunaでハイパーパラメータチューニング | Notes for hacks](./tune-hyper-parameters-with-optuna)
