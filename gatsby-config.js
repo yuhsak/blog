@@ -75,7 +75,7 @@ module.exports = {
               image: {
                 width: 1200,
                 height: 630,
-                backgroundColor: '#fff',
+                backgroundImage: require.resolve('./ogp/bg.png'),
               },
               style: {
                 title: {
@@ -100,12 +100,12 @@ module.exports = {
               },
               fontFile: [
                 {
-                  path: require.resolve('./font/NotoSansCJKjp-Medium.otf'),
+                  path: require.resolve('./ogp/font/NotoSansCJKjp-Medium.otf'),
                   family: 'Noto Sans CJK JP',
                   weight: 'bold',
                 },
                 {
-                  path: require.resolve('./font/NotoSansCJKjp-Regular.otf'),
+                  path: require.resolve('./ogp/font/NotoSansCJKjp-Regular.otf'),
                   family: 'Noto Sans CJK JP',
                   weight: '400',
                 },
