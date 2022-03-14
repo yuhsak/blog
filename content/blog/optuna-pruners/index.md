@@ -3,7 +3,7 @@ title: OptunaのPruner一覧
 description: さくさく枝刈りして探索を効率化しよう
 date: '2022-03-14T04:56:26.962Z'
 category: データサイエンス
-tags: ['機械学習', 'ハイパーパラメータチューニング', 'Optuna']
+tags: ['機械学習', 'ハイパーパラメータチューニング', 'Python', 'Optuna']
 ---
 
 [Optuna](https://optuna.org)にはPrunerっていう探索を劇的に効率化する仕組みがあるんだけど、みんな使ってる？
