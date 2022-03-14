@@ -25,7 +25,7 @@ pip install tqdm
 
 ## スニペット
 
-単なる関数じゃなくて`keras.callbacks.Callback`を継承するのがポイント。
+単なる関数じゃなくて`keras.callbacks.Callback`を継承したクラスを作るのがポイント。
 
 `epoch`と`step`それぞれに対して2つプログレスバーを表示しているよ。
 
