@@ -497,7 +497,7 @@ optuna.logging.set_verbosity(optuna.logging.FATAL)
 
 使い方は[GitHubリポジトリ](https://github.com/optuna/optuna-dashboard)を見てくれれば一撃で分かると思うからここでは割愛。
 
-個人的な趣味でHyperBandでPruningしながらLightGBMのパラメータチューニングをした時の結果を例にどんな可視化があるかちょっと紹介するよ。
+個人的な趣味でHyperbandでPruningしながらLightGBMのパラメータチューニングをした時の結果を例にどんな可視化があるかちょっと紹介するよ。
 
 ### スコアの散布図
 

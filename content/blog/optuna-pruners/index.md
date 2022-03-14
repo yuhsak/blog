@@ -355,7 +355,7 @@ Successive Halving単体よりもうまくいきそうな感じがすごいね�
 
 ### 注意点
 
-このHyperBandPrunerとデフォルトのTPESamplerを組み合わせる時は子Prunerの数を増やせば増やすほど最低限必要なTrial数も増えるってことに注意する必要があるらしい。
+このHyperbandPrunerとデフォルトのTPESamplerを組み合わせる時は子Prunerの数を増やせば増やすほど最低限必要なTrial数も増えるってことに注意する必要があるらしい。
 
 <NoteBox title='Sampler'>
 
@@ -373,7 +373,7 @@ TPESamplerは動作し始めるまでにデフォルトでは10Trial分の結果
 
 これは`reduction_factor`が小さい(=Prunerの数が多い)ほど確保すべきリソースが大きくなるというそもそもの性質と矛盾しないから特に困らないかもしれないけど、あんまり`n_trials`を大きくできない状況でHyperBandを使いたい場合は適宜Pruner数が妥当かどうか確認してみてね。
 
-**HyperBandの子Pruner数を求めるPythonコード**
+**Hyperbandの子Pruner数を求めるPythonコード**
 
 ```python
 import math
@@ -412,7 +412,7 @@ EarlyStoppingによくあるnステップの間スコアが向上しなかった
 
 結構たくさん用意してくれてて嬉しいね。
 
-自分は特に`HyperBandPruner`がお気に入り。
+自分は特に`HyperbandPruner`がお気に入り。
 
 少なくともこれまで色々なタイプのモデルで使ってみた時の手応え的にはほとんどのケースで`MedianPruner`や単体の`SuccessiveHalvingPruner`よりも明らかに良いパラメータに辿り着くまでの探索効率が優れている実感があるよ。
 
