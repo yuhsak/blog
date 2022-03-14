@@ -431,7 +431,7 @@ Optunaが公式で推してる使い分けはこんな感じ。
 
 <InfoBox>
 
-SamplerによってPrunerとの相性の良し悪しもあるみたいで、`TPESampler`には`HyperBandPruner`, `RandomSampler`には`MedianPruner`を使うと良いみたい。
+SamplerによってPrunerとの相性の良し悪しもあるみたいで、`TPESampler`には`HyperbandPruner`, `RandomSampler`には`MedianPruner`を使うと良いみたい。
 
 </InfoBox>
 
