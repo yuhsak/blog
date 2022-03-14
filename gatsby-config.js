@@ -96,7 +96,7 @@ module.exports = {
                 },
               },
               meta: {
-                author: 'Notes for hacks',
+                author: 'blog.ysk.im',
               },
               fontFile: [
                 {
