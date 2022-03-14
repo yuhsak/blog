@@ -39,6 +39,7 @@ const Seo = ({ description, lang, meta, title }) => {
       }}
       title={title}
       titleTemplate={title === siteTitle ? siteTitle : `%s | ${siteTitle}`}
+      defer={false}
       meta={[
         {
           name: `description`,
