@@ -130,7 +130,7 @@ span.command-line-prompt {
 
 span.command-line-prompt > span:before {
   color: #999;
-  opacity: 0.55;
+  opacity: 0.8;
 }
 
 .command-line-prompt > span[data-user]:before {
