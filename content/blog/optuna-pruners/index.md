@@ -36,7 +36,7 @@ tags: ['機械学習', 'ハイパーパラメータチューニング', 'Optuna'
 
 Pruner初見の人は使い方が分かっていた方がイメージしやすいと思うから、良かったら一覧を見る前にチェックしてみてね。
 
-[Optunaでハイパーパラメータチューニング#Prunerの基本 | Notes for hacks](./tune-hyper-parameters-with-optuna#prunerの基本)
+[Optunaでハイパーパラメータチューニング#Prunerで早期に枝刈り | Notes for hacks](./tune-hyper-parameters-with-optuna#prunerで早期に枝刈り)
 
 </InfoBox>
 
