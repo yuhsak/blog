@@ -12,6 +12,7 @@ type DataProps = {
   site: {
     siteMetadata: {
       title: string
+      siteUrl: string
     }
   }
   mdx: {
@@ -27,6 +28,9 @@ type DataProps = {
     }
     tableOfContents: {
       items: TableOfContentsItemData[]
+    }
+    fields: {
+      slug: string
     }
   }
   previous: {
@@ -52,12 +56,15 @@ const BlogPostTemplate = ({ data, location }: PageProps<DataProps>) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
   const toc = post.tableOfContents.items || []
+  const url = `${data.site.siteMetadata.siteUrl}${post.fields.slug}`
 
   return (
     <Layout location={location} title={siteTitle}>
       <Seo
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
+        url={url}
+        image={`${url}/ogp.png`}
       />
       <article className='blog-post' itemScope itemType='http://schema.org/Article'>
         <header>
@@ -123,6 +130,7 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        siteUrl
       }
     }
     mdx(id: { eq: $id }) {
@@ -137,6 +145,9 @@ export const pageQuery = graphql`
         tags
       }
       tableOfContents
+      fields {
+        slug
+      }
     }
     previous: mdx(id: { eq: $previousPostId }) {
       fields {

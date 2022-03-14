@@ -66,6 +66,54 @@ module.exports = {
               rel: 'noopener noreferrer',
             },
           },
+          {
+            resolve: 'gatsby-remark-og-image',
+            options: {
+              output: {
+                fileName: 'ogp.png',
+              },
+              image: {
+                width: 1200,
+                height: 630,
+                backgroundColor: '#fff',
+              },
+              style: {
+                title: {
+                  fontFamily: 'Noto Sans CJK JP',
+                  fontColor: '#2e353f',
+                  fontWeight: 'bold',
+                  fontSize: 64,
+                  paddingTop: 100,
+                  paddingBottom: 200,
+                  paddingLeft: 150,
+                  paddingRight: 150,
+                },
+                author: {
+                  fontFamily: 'Noto Sans CJK JP',
+                  fontColor: '#2e353f',
+                  fontWeight: '400',
+                  fontSize: 42,
+                },
+              },
+              meta: {
+                author: 'Notes for hacks',
+              },
+              fontFile: [
+                {
+                  path: require.resolve('./font/NotoSansCJKjp-Medium.otf'),
+                  family: 'Noto Sans CJK JP',
+                  weight: 'bold',
+                },
+                {
+                  path: require.resolve('./font/NotoSansCJKjp-Regular.otf'),
+                  family: 'Noto Sans CJK JP',
+                  weight: '400',
+                },
+              ],
+              iconFile: require.resolve('./src/images/icon.png'),
+              timeout: 10000,
+            },
+          },
         ],
         remarkPlugins: [require('remark-math')],
         rehypePlugins: [[require('rehype-katex'), { strict: 'ignore' }]],
