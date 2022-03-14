@@ -18,6 +18,7 @@ const Seo = ({ description, lang, meta, title, image, url }) => {
           siteMetadata {
             title
             description
+            siteUrl
             social {
               twitter
             }
@@ -72,7 +73,12 @@ const Seo = ({ description, lang, meta, title, image, url }) => {
                 content: image,
               },
             ]
-          : []),
+          : [
+              {
+                property: `og:image`,
+                content: `${site.siteMetadata.siteUrl}/ogp.png`,
+              },
+            ]),
         {
           name: `twitter:card`,
           content: `summary_large_image`,
