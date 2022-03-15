@@ -15,7 +15,15 @@ export const useTableOfContents = (tags: string[], url: string) => {
           const toc = document.querySelector<HTMLElement>('.table-of-contents')
           const tocIndex = document.getElementById(`toc__${idWithHash.replace(/^#/, '')}`)
           if (toc && tocIndex) {
-            toc.scrollTop = tocIndex.offsetTop - toc.offsetHeight + tocIndex.offsetHeight
+            const upper = toc.scrollTop
+            const lower = upper + toc.offsetHeight
+            const top = tocIndex.offsetTop
+            const bottom = top + tocIndex.offsetHeight
+            if (top < upper) {
+              toc.scrollTop = top
+            } else if (lower < bottom) {
+              toc.scrollTop = tocIndex.offsetTop - toc.offsetHeight + tocIndex.offsetHeight
+            }
           }
         }
         const exec = delay ? () => setTimeout(handle, delay) : handle
