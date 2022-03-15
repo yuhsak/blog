@@ -1,23 +1,21 @@
 const catchy = require('catchy-image')
 const path = require('path')
 
-module.exports = async ({ markdownNode }, pluginOptions) => {
+module.exports = async (args, option) => {
+  // console.log(args)
+  const { markdownNode, reporter } = args
   const result = await catchy.generate({
-    ...pluginOptions,
+    ...option,
     output: {
-      ...pluginOptions.output,
-      directory: path.join(
-        './public',
-        pluginOptions.output.directory || '',
-        markdownNode.fields.slug,
-      ),
-      fileName: pluginOptions.output.fileName,
+      ...option.output,
+      directory: path.join('./public', option.output.directory || '', markdownNode.fields.slug),
+      fileName: option.output.fileName,
     },
     meta: {
-      ...pluginOptions.meta,
+      ...option.meta,
       title: markdownNode.frontmatter.title,
     },
   })
 
-  console.info(`gatsby-remark-og-image: Successful generated: ${result}`)
+  reporter.verbose(`[gatsby-remark-og-image] Generated: ${result}`)
 }

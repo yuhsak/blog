@@ -1,12 +1,14 @@
 import * as React from 'react'
 import { Link, graphql, PageProps } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
-import { MDXProvider } from '@mdx-js/react'
+import { MDXProvider, MDXProviderComponents } from '@mdx-js/react'
+import { NoteBox, InfoBox, WarnBox, ErrorBox } from '../../components/box'
+
+const components: MDXProviderComponents = { NoteBox, InfoBox, WarnBox, ErrorBox }
 
 import Layout from '../../components/layout'
 import Seo from '../../components/seo'
 import { TableOfContents, TableOfContentsItemData } from './table-of-contents'
-import { NoteBox, InfoBox, WarnBox, ErrorBox } from '../../components/post'
 
 type DataProps = {
   site: {
@@ -80,7 +82,7 @@ const BlogPostTemplate = ({ data, location }: PageProps<DataProps>) => {
           }}
         >
           <section itemProp='articleBody' style={{ flex: 1, minWidth: '1em' }}>
-            <MDXProvider components={{ NoteBox, InfoBox, WarnBox, ErrorBox }}>
+            <MDXProvider components={components}>
               <MDXRenderer>{post.body}</MDXRenderer>
             </MDXProvider>
           </section>
