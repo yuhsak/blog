@@ -1,7 +1,7 @@
 ---
 title: Kerasの進捗をプログレスバーで表示する
 description: エポックもステップも華麗に確認しよう
-date: '2022-03-14T20:10:52.902Z'
+date: '2022-03-15T00:15:36.181Z'
 category: データサイエンス
 tags: ['機械学習', 'Python', 'TensorFlow', 'Keras', 'tqdm', '小ネタ']
 ---
