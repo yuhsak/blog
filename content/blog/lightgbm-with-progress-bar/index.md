@@ -10,7 +10,11 @@ tags: ['機械学習', 'Python', 'LightGBM', 'tqdm', '小ネタ']
 
 今日はPythonライブラリの[`tqdm`](https://github.com/tqdm/tqdm)を使っていい感じのプログレスバーで進捗を表示するスニペットを紹介するよ。
 
-![](lgbm-tqdm.gif)
+<video autoplay loop muted playsinline>
+    <source src="./lgbm-tqdm.webm" type='video/webm' />
+    <source src="./lgbm-tqdm.mp4" type='video/mp4' />
+    <img src="./lgbm-tqdm.gif" />
+</video>
 
 1イテレーションにかかる時間もサクっと確認できて便利！
 

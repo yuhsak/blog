@@ -12,7 +12,11 @@ tags: ['機械学習', 'Python', 'Joblib', 'tqdm', '小ネタ']
 
 プログレスバー大好きすぎて。笑
 
-![](./joblib-tqdm.gif)
+<video autoplay loop muted playsinline>
+    <source src="./joblib-tqdm.webm" type='video/webm' />
+    <source src="./joblib-tqdm.mp4" type='video/mp4' />
+    <img src="./joblib-tqdm.gif" />
+</video>
 
 <InfoBox title='Joblibのバージョン'>
 
