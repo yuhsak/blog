@@ -42,11 +42,11 @@ class KerasProgressBarCallback(keras.callbacks.Callback):
 
     def __init__(self, description: Optional[str] = None):
         self.description = description
-        self.pbar_epoch = tqdm(description=self.description)
-        self.pbar_step = tqdm()
+        self.pbar_epoch = tqdm(desc=self.description)
+        self.pbar_step = tqdm(desc="steps")
 
     def __update_postfix(self, pbar: tqdm, logs: Dict[str, float]):
-        postfix = OrderedDict([(key, value) for key, value in logs.items()])
+        postfix = OrderedDict([(key, str(value)) for key, value in logs.items()])
         pbar.set_postfix(ordered_dict=postfix, refresh=False)
 
     def on_train_begin(self, logs={}):

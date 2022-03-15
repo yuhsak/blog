@@ -61,7 +61,12 @@ const Seo = ({ description, lang, meta, title, image, url }) => {
                 content: url,
               },
             ]
-          : []),
+          : [
+              {
+                property: `og:url`,
+                content: site.siteMetadata.siteUrl,
+              },
+            ]),
         {
           property: `og:type`,
           content: `website`,
