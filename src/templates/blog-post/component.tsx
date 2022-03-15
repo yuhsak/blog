@@ -33,6 +33,10 @@ type DataProps = {
     }
     fields: {
       slug: string
+      hero: {
+        text: string
+        path: string
+      }
     }
   }
   previous: {
@@ -53,20 +57,28 @@ type DataProps = {
   }
 }
 
-const BlogPostTemplate = ({ data, location }: PageProps<DataProps>) => {
-  const post = data.mdx
-  const siteTitle = data.site.siteMetadata?.title || `Title`
-  const { previous, next } = data
+const BlogPostTemplate = ({
+  data: {
+    mdx: post,
+    site: {
+      siteMetadata: { title, siteUrl },
+    },
+    previous,
+    next,
+  },
+  location,
+}: PageProps<DataProps>) => {
   const toc = post.tableOfContents.items || []
-  const url = `${data.site.siteMetadata.siteUrl}${post.fields.slug}`
+  const url = `${siteUrl}${post.fields.slug}`
+  const image = `${siteUrl}${post.fields.hero.path}`
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} title={title}>
       <Seo
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
         url={url}
-        image={`${url}/ogp.png`}
+        image={image}
       />
       <article className='blog-post' itemScope itemType='http://schema.org/Article'>
         <header>
@@ -149,6 +161,10 @@ export const pageQuery = graphql`
       tableOfContents
       fields {
         slug
+        hero {
+          text
+          path
+        }
       }
     }
     previous: mdx(id: { eq: $previousPostId }) {

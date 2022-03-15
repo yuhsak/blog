@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   siteMetadata: {
     title: `Notes for hacks`,
@@ -67,10 +69,10 @@ module.exports = {
             },
           },
           {
-            resolve: 'gatsby-remark-og-image',
+            resolve: 'gatsby-remark-auto-hero',
             options: {
               output: {
-                fileName: 'ogp.png',
+                filePath: (node) => path.join(node.fields.slug, 'ogp.png'),
               },
               image: {
                 width: 1200,
@@ -96,7 +98,7 @@ module.exports = {
                 },
               },
               meta: {
-                author: 'blog.ysk.im',
+                author: '',
               },
               fontFile: [
                 {
@@ -209,5 +211,6 @@ module.exports = {
       },
     },
     'gatsby-plugin-sitemap',
+    // `gatsby-transformer-auto-ogp-image`,
   ],
 }

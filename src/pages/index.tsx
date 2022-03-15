@@ -9,6 +9,7 @@ type DataProps = {
   site: {
     siteMetadata: {
       title: string
+      siteUrl: string
     }
   }
   allMdx: {
@@ -27,13 +28,13 @@ type DataProps = {
 }
 
 const BlogIndex = ({ data, location }: PageProps<DataProps>) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
+  const { title, siteUrl } = data.site.siteMetadata
   const posts = data.allMdx.nodes
 
   if (posts.length === 0) {
     return (
-      <Layout location={location} title={siteTitle}>
-        <Seo title={siteTitle} />
+      <Layout location={location} title={title}>
+        <Seo title={title} url={siteUrl} image={`${siteUrl}/ogp.png`} />
         <Bio />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the directory you specified
@@ -44,8 +45,8 @@ const BlogIndex = ({ data, location }: PageProps<DataProps>) => {
   }
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <Seo title={siteTitle} />
+    <Layout location={location} title={title}>
+      <Seo title={title} url={siteUrl} image={`${siteUrl}/ogp.png`} />
       <Bio />
       <ol style={{ listStyle: `none` }}>
         {posts.map((post) => {
@@ -86,6 +87,7 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        siteUrl
       }
     }
     allMdx(sort: { fields: [frontmatter___date], order: DESC }) {

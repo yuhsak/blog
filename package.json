@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/mdx-js__react": "^1.5.5",
+    "@types/react-helmet": "^6.1.5",
     "prettier": "^2.5.1",
     "prettier-plugin-md-nocjsp": "^1.2.0",
     "typescript": "^4.6.2"
