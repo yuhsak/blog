@@ -14,6 +14,12 @@ tags: ['機械学習', 'Python', 'Joblib', 'tqdm', '小ネタ']
 
 ![](./joblib-tqdm.gif)
 
+<InfoBox title='Joblibのバージョン'>
+
+`1.1.0`
+
+</InfoBox>
+
 ## tqdmのインストール
 
 プログレスバーを使う時はこれ！

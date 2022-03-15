@@ -14,6 +14,12 @@ tags: ['機械学習', 'Python', 'LightGBM', 'tqdm', '小ネタ']
 
 1イテレーションにかかる時間もサクっと確認できて便利！
 
+<InfoBox title='LightGBMのバージョン'>
+
+`3.3.2`
+
+</InfoBox>
+
 ## スニペット
 
 `tqdm`を初めて使う時はpipやcondaでインストールしておこう。

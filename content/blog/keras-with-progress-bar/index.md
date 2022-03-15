@@ -6,16 +6,26 @@ category: データサイエンス
 tags: ['機械学習', 'Python', 'TensorFlow', 'Keras', 'tqdm', '小ネタ']
 ---
 
-プログレスバーシリーズ第三弾はKeras！
+プログレスバーで表示するシリーズ第三弾はKeras！
 
 学習の進捗を`tqdm`でかっこよく表示するスニペットを紹介するよ。
 
 ![](./keras-tqdm.gif)
 
-↓これまでのプログレスバーシリーズ
+TensorBoardも超いいけどこういうシンプルな進捗表示もアリだよね。
+
+<InfoBox title='これまでのプログレスバーシリーズ'>
 
 - [LightGBMの進捗をプログレスバーで表示する](./lightgbm-with-progress-bar)
 - [Joblibの進捗をプログレスバーで表示する](./joblib-with-progress-bar)
+
+</InfoBox>
+
+<InfoBox title='TensorFlowのバージョン'>
+
+`2.7.0`
+
+</InfoBox>
 
 ## インストール
 
