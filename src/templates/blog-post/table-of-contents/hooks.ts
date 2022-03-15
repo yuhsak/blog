@@ -7,11 +7,16 @@ export const useTableOfContents = (tags: string[], url: string) => {
   const setActiveIndexId = (delay?: number) =>
     useCallback(
       (idWithOrWithoutHash: string) => {
-        idWithOrWithoutHash = idWithOrWithoutHash.startsWith('#')
+        const idWithHash = idWithOrWithoutHash.startsWith('#')
           ? idWithOrWithoutHash
           : `#${idWithOrWithoutHash}`
         const handle = () => {
-          _setActiveIndexId(idWithOrWithoutHash)
+          _setActiveIndexId(idWithHash)
+          const toc = document.querySelector<HTMLElement>('.table-of-contents')
+          const tocIndex = document.getElementById(`toc__${idWithHash.replace(/^#/, '')}`)
+          if (toc && tocIndex) {
+            toc.scrollTop = tocIndex.offsetTop - toc.offsetHeight + tocIndex.offsetHeight
+          }
         }
         const exec = delay ? () => setTimeout(handle, delay) : handle
         exec()

@@ -30,6 +30,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
           data={item}
           activeIndexId={activeIndexId}
           onClick={setActiveIndexId(100)}
+          maxDepth={tags.length - 1}
         />
       ))}
     </ul>
@@ -52,6 +53,7 @@ const TableOfContentsItem: React.FC<{
   return (
     <li>
       <a
+        id={`toc__${idWithHash.replace(/^#/, '')}`}
         href={idWithHash}
         className={activeIndexId === idWithHash ? 'active' : ''}
         onClick={(e) => {
@@ -60,6 +62,7 @@ const TableOfContentsItem: React.FC<{
           const elem = document.getElementById(idWithHash.replace(/^#/, ''))
           elem?.scrollIntoView()
         }}
+        style={depth === 0 ? { fontWeight: '600' } : {}}
       >
         {title}
       </a>
@@ -73,6 +76,7 @@ const TableOfContentsItem: React.FC<{
               activeIndexId={activeIndexId}
               onClick={onClick}
               depth={depth + 1}
+              maxDepth={maxDepth}
             />
           ))}
         </ul>

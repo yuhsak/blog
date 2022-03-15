@@ -446,11 +446,13 @@ h1#site-title {
   margin: 0;
   padding: 0;
   width: 192px;
+  max-height: 80vh;
   position: sticky;
   top: 0;
   margin-left: var(--spacing-12);
   box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
   border-radius: 4px;
+  overflow-y: scroll;
 }
 
 .blog-post ul.table-of-contents ul {
@@ -470,6 +472,7 @@ h1#site-title {
   display: block;
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--fontSize-0);
+  line-height: var(--lineHeight-tight);
 }
 
 .blog-post ul.table-of-contents li > a.active {

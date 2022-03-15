@@ -87,7 +87,7 @@ const BlogPostTemplate = ({ data, location }: PageProps<DataProps>) => {
           <TableOfContents
             className='table-of-contents'
             items={toc}
-            tags={['h2']}
+            tags={['h2', 'h3', 'h4']}
             url={location.pathname}
           />
         </div>
