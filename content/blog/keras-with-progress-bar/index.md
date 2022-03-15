@@ -10,6 +10,8 @@ tags: ['機械学習', 'Python', 'TensorFlow', 'Keras', 'tqdm', '小ネタ']
 
 学習の進捗を`tqdm`でかっこよく表示するスニペットを紹介するよ。
 
+![](./keras-tqdm.gif)
+
 ↓これまでのプログレスバーシリーズ
 
 - [LightGBMの進捗をプログレスバーで表示する](./lightgbm-with-progress-bar)
