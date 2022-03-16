@@ -13,8 +13,8 @@ tags: ['機械学習', 'Python', 'Joblib', 'tqdm', '小ネタ']
 プログレスバー大好きすぎて。笑
 
 <video autoplay loop muted playsinline>
-    <source src="./joblib-tqdm.webm" type='video/webm' />
-    <source src="./joblib-tqdm.mp4" type='video/mp4' />
+    <source src="./joblib-tqdm.webm" type="video/webm; codecs='vp9'" />
+    <source src="./joblib-tqdm.mp4" type="video/mp4; codecs='avc1'" />
     <img src="./joblib-tqdm.gif" />
 </video>
 
