@@ -11,8 +11,8 @@ tags: ['機械学習', 'Python', 'LightGBM', 'tqdm', '小ネタ']
 今日はPythonライブラリの[`tqdm`](https://github.com/tqdm/tqdm)を使っていい感じのプログレスバーで進捗を表示するスニペットを紹介するよ。
 
 <video autoplay loop muted playsinline>
-    <source src="./lgbm-tqdm.webm" type="video/webm; codecs='vp9'" />
-    <source src="./lgbm-tqdm.mp4" type="video/mp4; codecs='avc1'" />
+    <source src="./lgbm-tqdm.webm" type='video/webm; codecs="vp9"' />
+    <source src="./lgbm-tqdm.mp4" type='video/mp4; codecs="avc1"' />
     <img src="./lgbm-tqdm.gif" />
 </video>
 

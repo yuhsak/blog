@@ -35,13 +35,13 @@ iOSのSafariはまだWebMに対応してないからiPhoneやiPadだと表示さ
 ### MP4 `44Kb`
 
 <video autoplay loop muted playsinline>
-    <source src="../joblib-with-progress-bar/joblib-tqdm.mp4" type="video/mp4; codecs='avc1'" />
+    <source src="../joblib-with-progress-bar/joblib-tqdm.mp4" type='video/mp4; codecs="avc1"' />
 </video>
 
 ### WebM `33Kb`
 
 <video autoplay loop muted playsinline>
-    <source src="../joblib-with-progress-bar/joblib-tqdm.webm" type="video/webm; codecs='vp9'" />
+    <source src="../joblib-with-progress-bar/joblib-tqdm.webm" type='video/webm; codecs="vp9"' />
 </video>
 
 `GIF`が**145Kb**、`MP4`が**44Kb**ともうこの時点で$\bold{\Large \frac{1}{3}}$**以下**になってる上に画質も圧倒的に良い。
@@ -276,8 +276,8 @@ ffmpeg -i input.mov -c:v libx264 -pix_fmt yuv420p output.mp4
 
 ```html
 <video autoplay loop playsinline muted>
-  <source src="video.webm" type="video/webm; codecs='vp9'" />
-  <source src="video.mp4" type="video/mp4; codecs='avc1'" />
+  <source src="video.webm" type='video/webm; codecs="vp9"' />
+  <source src="video.mp4" type='video/mp4; codecs="avc1"' />
   <img src="video.gif" />
 </video>
 ```

@@ -11,8 +11,8 @@ tags: ['機械学習', 'Python', 'TensorFlow', 'Keras', 'tqdm', '小ネタ']
 学習の進捗を`tqdm`でかっこよく表示するスニペットを紹介するよ。
 
 <video autoplay loop muted playsinline>
-    <source src="./keras-tqdm.webm" type="video/webm; codecs='vp9'" />
-    <source src="./keras-tqdm.mp4" type="video/mp4; codecs='avc1'" />
+    <source src="./keras-tqdm.webm" type='video/webm; codecs="vp9"' />
+    <source src="./keras-tqdm.mp4" type='video/mp4; codecs="avc1"' />
     <img src="./keras-tqdm.gif" />
 </video>
 

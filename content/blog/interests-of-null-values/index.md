@@ -96,13 +96,13 @@ Twitterアカウントはこちら → [@YuhsakInoue](https://twitter.com/Yuhsak
 例に挙げたアンケートのパターンのようにあるデータ点で欠損している項目数をカウントした特徴量を追加してみる方法。  
 これで精度が上がれば欠損していること自体が良い情報になってそう。
 
-```py
+```python
 df["count_na"] = df["feat_A"].isna() + df["feat_B"].isna()
 ```
 
 実際は単純なカウントよりも適当な粒度で切ったグループ内の統計量を与えた方がより効果的な場合が多い。(もちろんリークには気をつけないとね)
 
-```py
+```python
 # 日毎に標準化する
 group_count_na = df.groupby("date")["count_na"]
 
@@ -175,7 +175,7 @@ print("diff  :", metric_na - metric_fillna)
 
 データの加工後に最終的に `inf` が混じっているかどうかもチェックしておきたい時用にそっちバージョンも。
 
-```py
+```python
 from pandas import DataFrame
 from typing import Callable
 import numpy as np
@@ -193,7 +193,7 @@ def extract_inf(df: DataFrame) -> DataFrame:
     return extract_grid(df.select_dtypes(exclude=['object']), lambda df: np.isinf(df))
 ```
 
-```py
+```python
 # こういうDataFrameがあるとき
 df
 ```
@@ -204,7 +204,7 @@ df
 | 1   |    0.2 |    0.9 |    0.7 |
 | 2   |    NaN |    1.3 |    0.9 |
 
-```py
+```python
 # こうなる
 df_na = extract_na(df)
 
