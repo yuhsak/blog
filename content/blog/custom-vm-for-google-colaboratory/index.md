@@ -306,7 +306,7 @@ VMの起動中はアクセス権を変更することができない。もし起
 
 まずセルで下記のコマンドを実行してマウント用の[gcsfuse](https://github.com/GoogleCloudPlatform/gcsfuse)というOSSをインストールする。
 
-```bash
+```shell
 # リポジトリ一覧にgcsfuseのものを追加
 !echo "deb http://packages.cloud.google.com/apt gcsfuse-`lsb_release -c -s` main" | sudo tee /etc/apt/sources.list.d/gcsfuse.list
 !curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -334,7 +334,7 @@ Filesystem in Userspaceの略で、Unixのカーネルをいじることなく�
 
 続いてバケットをマウント。GCSのバケット名は `my-bucket` になってるとして下記のコマンドを実行するとマウントできる。
 
-```bash
+```shell
 # マウント用のディレクトリを準備
 !mkdir -p /content/gcs
 

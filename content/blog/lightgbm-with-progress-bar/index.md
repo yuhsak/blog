@@ -28,7 +28,7 @@ tags: ['機械学習', 'Python', 'LightGBM', 'tqdm', '小ネタ']
 
 `tqdm`を初めて使う時はpipやcondaでインストールしておこう。
 
-```bash
+```shell
 pip install tqdm
 ```
 
