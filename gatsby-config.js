@@ -34,7 +34,7 @@ module.exports = {
       options: {
         extensions: [`.md`, `.mdx`],
         gatsbyRemarkPlugins: [
-          'gatsby-remark-code-titles',
+          'gatsby-remark-prismjs-title',
           `gatsby-remark-autolink-headers`,
           {
             resolve: `gatsby-remark-images`,
@@ -57,6 +57,20 @@ module.exports = {
                 host: 'localhost',
                 global: false,
               },
+              languageExtensions: [
+                {
+                  extend: 'shell',
+                  insertBefore: {
+                    function: {
+                      'extra-function': {
+                        pattern:
+                          /(^|\n|sudo|[;|&]|[<>]\()\s*(?:brew|pip|npm|node|python|apt-key|ffmpeg|fallocate|!echo|!curl|!apt-get|!mkdir|!gcsfuse)(?=$|[)\s;|&])/,
+                        lookbehind: true,
+                      },
+                    },
+                  },
+                },
+              ],
             },
           },
           `gatsby-remark-copy-linked-files`,

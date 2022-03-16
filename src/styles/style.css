@@ -47,6 +47,7 @@
   --lineHeight-relaxed: 1.85;
   --letterSpacing: 0.08em;
   /* 1.200 Minor Third Type Scale */
+  --fontSize--1: 0.694rem;
   --fontSize-0: 0.833rem;
   --fontSize-1: 1rem;
   --fontSize-2: 1.1rem;
@@ -123,6 +124,18 @@ pre[class*='language-'] code[class*='language-'] {
   line-height: var(--lineHeight-tight);
 }
 
+/* Inline code */
+
+:not(pre[class*='language-']) > code.language-text {
+  padding: 0.2em 0.4em;
+  margin: 0 0.1em;
+  font-size: 0.8em;
+  background-color: rgba(110, 118, 129, 0.2);
+  color: var(--color-text);
+}
+
+/* Shell prompt */
+
 span.command-line-prompt {
   border-right: none;
   margin-right: 0;
@@ -145,14 +158,106 @@ span.command-line-prompt > span:before {
   content: attr(data-prompt);
 }
 
-/* Inline code */
+/* Code title */
 
-:not(pre[class*='language-']) > code.language-text {
-  padding: 0.2em 0.4em;
-  margin: 0 0.1em;
-  font-size: 0.8em;
-  background-color: rgba(110, 118, 129, 0.2);
-  color: var(--color-text);
+.gatsby-code-title {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-bottom: -0.6rem;
+  padding: 0.6125em 1.25em;
+  position: relative;
+
+  font-size: var(--fontSize-0);
+  font-weight: var(--fontWeight-semibold);
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+
+  background-color: black;
+  color: white;
+
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+}
+
+.gatsby-code-title + .gatsby-highlight {
+  position: relative;
+}
+
+.gatsby-code-title + .gatsby-highlight pre {
+  border-top-left-radius: 0px;
+}
+
+/* Line highlight */
+
+.gatsby-highlight-code-line {
+  background-color: #ffeebb24;
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 0.75em;
+  border-left: 0.25em solid #f99;
+}
+
+/* Language name */
+
+.gatsby-highlight {
+  position: relative;
+}
+
+.gatsby-highlight pre[class*='language-']::before {
+  background: lightgray;
+  background-image: linear-gradient(135deg, #7928ca, #ff0080);
+  border-radius: 0 0 0.25rem 0.25rem;
+  color: #fff;
+  font-size: var(--fontSize--1);
+  font-weight: var(--fontWeight-semibold);
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.1em;
+  padding: 0.1rem 0.5rem;
+  position: absolute;
+  right: 1rem;
+  text-align: right;
+  top: 0;
+  opacity: 0.8;
+}
+
+.gatsby-highlight pre[class='language-python']::before {
+  content: 'Python';
+  background-image: linear-gradient(135deg, #3673a5, #99a537);
+}
+
+.gatsby-highlight pre[class='language-js']::before {
+  content: 'JS';
+  background-image: linear-gradient(135deg, #e5a220, #df20e5);
+}
+
+.gatsby-highlight pre[class='language-html']::before {
+  content: 'HTML';
+  background-image: linear-gradient(135deg, #e32626, #d327e4);
+}
+
+.gatsby-highlight pre[class='language-ts']::before {
+  content: 'TS';
+  background-image: linear-gradient(135deg, #3772a5, #2fbfb3);
+}
+
+/* Extra functions */
+
+.token.extra-function {
+  color: #f08d49;
+}
+
+/* WIP: Line numbers */
+
+.gatsby-highlight pre[class*='language-'].line-numbers {
+  padding-left: 3.8em;
+  overflow: initial;
+}
+
+.gatsby-highlight pre[class*='language-'] .line-numbers-rows {
+  line-height: var(--lineHeight-tight);
+  padding: 1em;
+  padding-right: 0;
 }
 
 /* Heading */
@@ -497,33 +602,6 @@ h1#site-title {
 .blog-post ul.table-of-contents li > a:hover {
   color: var(--color-heading);
   background-color: rgba(17, 17, 26, 0.05);
-}
-
-.blog-post .gatsby-code-title {
-  display: inline-block;
-  vertical-align: bottom;
-  margin-bottom: -0.6rem;
-  padding: 0.6125em 1.25em;
-  position: relative;
-
-  font-size: var(--fontSize-0);
-  font-weight: var(--fontWeight-semibold);
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-
-  background-color: black;
-  color: white;
-
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
-}
-
-.blog-post .gatsby-code-title + .gatsby-highlight {
-  position: relative;
-}
-
-.blog-post .gatsby-code-title + .gatsby-highlight pre {
-  /* border-top-right-radius: 0px; */
-  border-top-left-radius: 0px;
 }
 
 .blog-post .footnotes ol li {
