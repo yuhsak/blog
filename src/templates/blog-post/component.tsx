@@ -4,7 +4,15 @@ import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { MDXProvider, MDXProviderComponents } from '@mdx-js/react'
 import { NoteBox, InfoBox, WarnBox, ErrorBox } from '../../components/box'
 
-const components: MDXProviderComponents = { NoteBox, InfoBox, WarnBox, ErrorBox }
+const table: React.FC = (props) => {
+  return (
+    <div className='table-container'>
+      <table {...props} />
+    </div>
+  )
+}
+
+const components: MDXProviderComponents = { table, NoteBox, InfoBox, WarnBox, ErrorBox }
 
 import Layout from '../../components/layout'
 import Seo from '../../components/seo'
