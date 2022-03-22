@@ -12,9 +12,9 @@ export const Counter = () => {
   const [count, setCount] = useState(0)
   const handle = () => setCount((n) => n + 1)
   return (
-    <button style={{ marginBottom: 'var(--spacing-8)' }} onClick={handle}>
-      {count} クリック
-    </button>
+    <div style={{ marginBottom: 'var(--spacing-8)' }}>
+      <button onClick={handle}>{count} クリック</button>
+    </div>
   )
 }
 
