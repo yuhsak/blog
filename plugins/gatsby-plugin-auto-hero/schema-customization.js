@@ -3,6 +3,16 @@ const fs = require('fs').promises
 const catchy = require('catchy-image')
 const { createFileNodeFromBuffer } = require('gatsby-source-filesystem')
 
+const getOrGenerateFilePath = async (cache, key, option) => {
+  const cached = await cache.get(key)
+  if (cached) {
+    return cached
+  }
+  const generated = await catchy.generate(option)
+  await cache.set(key, generated)
+  return generated
+}
+
 exports.createSchemaCustomization = (
   { actions, store, cache, createNodeId, schema },
   { types = ['MarkdownRemark', 'Mdx'], meta = {}, ...option } = {},
@@ -33,23 +43,17 @@ exports.createSchemaCustomization = (
 
             const cacheKey = `gatsby-plugin-auto-hero/${source.internal.contentDigest}`
 
-            const cachedFilePath = await cache.get(cacheKey)
-
-            const generatedFilePath =
-              cachedFilePath ||
-              (await catchy.generate({
-                ...option,
-                output: {
-                  directory: dir,
-                  fileName: `${source.id}.png`,
-                },
-                meta: {
-                  ...meta,
-                  title: source.text,
-                },
-              }))
-
-            await cache.set(cacheKey, generatedFilePath)
+            const generatedFilePath = await getOrGenerateFilePath(cache, cacheKey, {
+              ...option,
+              output: {
+                directory: dir,
+                fileName: `${source.id}.png`,
+              },
+              meta: {
+                ...meta,
+                title: source.text,
+              },
+            })
 
             const buffer = await fs.readFile(generatedFilePath)
 

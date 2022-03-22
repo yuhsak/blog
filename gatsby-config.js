@@ -174,7 +174,7 @@ module.exports = {
         },
         fontFile: [
           {
-            path: require.resolve('./ogp/font/NotoSansCJKjp-Medium.otf'),
+            path: require.resolve('./ogp/font/NotoSansCJKjp-Bold.otf'),
             family: 'Noto Sans CJK JP',
             weight: 'bold',
           },
