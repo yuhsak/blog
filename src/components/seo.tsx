@@ -7,7 +7,7 @@ export type SeoProps = {
   title?: string
   description?: string
   url?: string
-  image?: string
+  image?: string | null | undefined
   meta?: any[]
 }
 

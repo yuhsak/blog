@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs').promises
 
 module.exports = async (
-  { markdownNode, actions, reporter, createNodeId },
+  { markdownNode, actions, reporter, createNodeId, store, cache },
   { output = {}, meta = {}, ...option } = {},
 ) => {
   const { createNode, createParentChildLink, createNodeField } = actions
@@ -14,6 +14,8 @@ module.exports = async (
   }
 
   const publicDir = path.join(process.cwd(), 'public')
+  console.log(markdownNode.fields)
+  console.log(frontmatter)
   const filePath = output.filePath?.(markdownNode) || path.join('hero', `${markdownNode.id}.png`)
   const absolutePath = path.join(publicDir, filePath)
   const { dir, base } = path.parse(absolutePath)
@@ -38,13 +40,35 @@ module.exports = async (
     },
   })
 
+  // const buffer = await fs.readFile(result)
+
+  // const node = await createFileNodeFromBuffer({
+  //   buffer,
+  //   store,
+  //   cache,
+  //   createNode,
+  //   createNodeId,
+  //   parentNodeId: markdownNode.id,
+  //   ext: '.png',
+  //   name: 'hero',
+  // })
+
+  // createNodeField({
+  //   node: markdownNode,
+  //   name: 'hero',
+  //   value: {
+  //     text,
+  //     path: node.relativePath,
+  //   },
+  // })
+
   const node = {
-    id: createNodeId(`${markdownNode.id} >> AutoHero`),
+    id: createNodeId(`${markdownNode.id} >> RemarkAutoHero`),
     children: [],
     parent: markdownNode.id,
     internal: {
       contentDigest: `${markdownNode.internal.contentDigest}`,
-      type: 'AutoHero',
+      type: 'RemarkAutoHero',
     },
     text,
     path: filePath,

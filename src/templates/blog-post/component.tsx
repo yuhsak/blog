@@ -41,9 +41,10 @@ type DataProps = {
     }
     fields: {
       slug: string
-      hero: {
-        text: string
-        path: string
+    }
+    childAutoHero: null | {
+      image: {
+        publicURL: string
       }
     }
   }
@@ -78,7 +79,7 @@ const BlogPostTemplate = ({
 }: PageProps<DataProps>) => {
   const toc = post.tableOfContents.items || []
   const url = `${siteUrl}${post.fields.slug}`
-  const image = `${siteUrl}${post.fields.hero.path}`
+  const image = post.childAutoHero ? `${siteUrl}${post.childAutoHero.image.publicURL}` : null
 
   return (
     <Layout location={location} title={title}>
@@ -169,9 +170,10 @@ export const pageQuery = graphql`
       tableOfContents
       fields {
         slug
-        hero {
-          text
-          path
+      }
+      childAutoHero {
+        image {
+          publicURL
         }
       }
     }
