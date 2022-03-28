@@ -195,13 +195,13 @@ span.command-line-prompt > span:before {
 /* Line highlight */
 
 .gatsby-highlight-code-line {
-  background-color: #ffeebb24;
+  background-color: #ffeebb16;
   display: block;
   margin-right: -1.2rem;
   margin-left: -1.2rem;
-  padding-right: 1em;
-  padding-left: 0.75em;
-  border-left: 0.25em solid #f99;
+  padding-right: 1rem;
+  padding-left: 0.95rem;
+  border-left: 0.25rem solid #f99;
 }
 
 /* Language name */
