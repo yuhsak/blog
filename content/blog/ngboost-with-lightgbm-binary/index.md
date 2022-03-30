@@ -31,7 +31,7 @@ def obj(x, y):
 ```
 
 ```python
-labels = obj(x, y)
+label = obj(x, y)
 ```
 
 境界が入り乱れている範囲の輪郭がラッパみたいな形になるね。
@@ -62,7 +62,7 @@ params = {
 ```python
 booster = lgbm.train(
     params,
-    lgbm.Dataset(np.array([x, y]).T, labels),
+    lgbm.Dataset(np.array([x, y]).T, label),
     num_boost_round=300,
 )
 
@@ -83,9 +83,9 @@ pred = booster.predict(np.array([x, y]).T)
 
 ```python
 def norm_likelihood_obj(log_var: np.ndarray, data: lgbm.Dataset):
-    y_true = data.get_label()
-    grad = 1 - (y_true - pred) ** 2 / np.exp(log_var)
-    hess = (y_true - pred) ** 2 * np.exp(-1 * log_var)
+    label = data.get_label()
+    grad = 1 - (pred - label) ** 2 / np.exp(log_var)
+    hess = (pred - label) ** 2 * np.exp(-1 * log_var)
     return grad, hess
 ```
 
@@ -94,7 +94,7 @@ def norm_likelihood_obj(log_var: np.ndarray, data: lgbm.Dataset):
 ```python
 booster_var = lgbm.train(
     params,
-    lgbm.Dataset(np.array([x, y]).T, labels),
+    lgbm.Dataset(np.array([x, y]).T, label),
     num_boost_round=300,
     fobj=norm_likelihood_obj,
 )
