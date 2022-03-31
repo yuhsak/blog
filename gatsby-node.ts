@@ -1,17 +1,34 @@
-const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+// const path = require(`path`)
+// const { createFilePath } = require(`gatsby-source-filesystem`)
+// const { isPublished } = require('./src/utils')
 
-/**
- * @type {import('gatsby').GatsbyNode['createPages']}
- */
-exports.createPages = async ({ graphql, actions, reporter }) => {
+import path from 'path'
+import { createFilePath } from 'gatsby-source-filesystem'
+import { isPublished } from './src/utils'
+import type { GatsbyNode } from 'gatsby'
+
+type MdxNode = {
+  id: string
+  fields: {
+    slug: string
+  }
+  frontmatter: {
+    title: string
+    description: string
+    date: string
+    category: string
+    isDraft: boolean | null
+  }
+}
+
+export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   // Define a template for blog post
   const blogPost = path.resolve(`./src/templates/blog-post/component.tsx`)
 
   // Get all markdown blog posts sorted by date
-  const result = await graphql(
+  const result = await graphql<{ allMdx: { nodes: MdxNode[] } }>(
     `
       {
         allMdx(sort: { fields: [frontmatter___date], order: ASC }, limit: 1000) {
@@ -22,6 +39,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             }
             frontmatter {
               title
+              description
+              date
+              category
               isDraft
             }
           }
@@ -35,36 +55,29 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return
   }
 
-  const posts = result.data.allMdx.nodes
+  const posts = result.data!.allMdx.nodes
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
 
-  posts
-    .filter((post) => {
-      return !!post.frontmatter.title && !post.frontmatter.isDraft
-    })
-    .forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
+  posts.filter(isPublished).forEach((post, index) => {
+    const previousPostId = index === 0 ? null : posts[index - 1]?.id
+    const nextPostId = index === posts.length - 1 ? null : posts[index + 1]?.id
 
-      createPage({
-        path: post.fields.slug,
-        component: blogPost,
-        context: {
-          id: post.id,
-          previousPostId,
-          nextPostId,
-        },
-      })
+    createPage({
+      path: post.fields.slug,
+      component: blogPost,
+      context: {
+        id: post.id,
+        previousPostId,
+        nextPostId,
+      },
     })
+  })
 }
 
-/**
- * @type {import('gatsby').GatsbyNode['onCreateNode']}
- */
-exports.onCreateNode = ({ node, actions, getNode }) => {
+export const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `Mdx`) {
@@ -78,10 +91,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
-/**
- * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
- */
-exports.createSchemaCustomization = ({ actions }) => {
+export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ actions }) => {
   const { createTypes } = actions
 
   // Explicitly define the siteMetadata {} object
