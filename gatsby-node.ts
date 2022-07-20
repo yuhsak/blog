@@ -31,7 +31,11 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
   const result = await graphql<{ allMdx: { nodes: MdxNode[] } }>(
     `
       {
-        allMdx(sort: { fields: [frontmatter___date], order: ASC }, limit: 1000) {
+        allMdx(
+          filter: { frontmatter: { isDraft: { ne: true } } }
+          sort: { fields: [frontmatter___date], order: ASC }
+          limit: 1000
+        ) {
           nodes {
             id
             fields {
@@ -61,7 +65,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
 
-  posts.filter(isPublished).forEach((post, index) => {
+  posts.forEach((post, index) => {
     const previousPostId = index === 0 ? null : posts[index - 1]?.id
     const nextPostId = index === posts.length - 1 ? null : posts[index + 1]?.id
 

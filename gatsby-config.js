@@ -114,18 +114,19 @@ module.exports = {
                   date: node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ 'content:encoded': node.html }],
+                  // custom_elements: [{ 'content:encoded': node.html }],
                 })
               })
             },
             query: `
               {
                 allMdx(
-                  sort: { order: DESC, fields: [frontmatter___date] },
+                  filter: { frontmatter: { isDraft: { ne: true } } }
+                  sort: { fields: [frontmatter___date], order: DESC }
+                  limit: 1000
                 ) {
                   nodes {
-                    excerpt
-                    html
+                    excerpt(pruneLength: 160)
                     fields {
                       slug
                     }
@@ -138,7 +139,7 @@ module.exports = {
               }
             `,
             output: '/rss.xml',
-            title: ' RSS Feed by Notes for hacks',
+            title: 'RSS Feed by Notes for hacks',
           },
         ],
       },
